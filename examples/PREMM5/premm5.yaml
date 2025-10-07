@@ -1,0 +1,166 @@
+# PREMM5 Clinical Questionnaire Configuration
+# This YAML file defines the structure and flow of the PREMM5 survey for Lynch syndrome risk assessment
+
+survey_name: PREMM5
+survey_version: 1.0.0
+PrevMed_version: 0.9.5
+
+# Optional header text - rendered as markdown at top of survey page
+header: |
+  ## À propos de ce questionnaire
+  
+  Ce questionnaire évalue le risque de syndrome de Lynch basé sur le modèle PREMM5.
+  
+  Le syndrome de Lynch est une condition génétique héréditaire qui augmente le risque de certains cancers,
+  notamment les cancers colorectaux et de l'endomètre.
+  
+  **Instructions:** Répondez à toutes les questions aussi précisément que possible. Les résultats seront
+  calculés automatiquement à la fin du questionnaire.
+
+questions:
+  - variable: sex
+    order: 1
+    widget: Radio
+    widget_args:
+      choices: ["M", "F"]
+    question: Sexe du/de la patient.e ?
+    
+  - variable: current_age
+    order: 2
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Âge actuel du/de la patient.e (en années) ?
+    valid_if: current_age >= 10 and current_age <= 120
+    invalid_message: L'âge doit être compris entre 10 et 120 ans.
+    
+  - variable: personal_crc_count
+    order: 3
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Combien de cancers colorectaux chez le.a patient.e ? (0, 1, 2 ou plus)
+    valid_if: personal_crc_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+    
+  - variable: age_crc_proband
+    order: 4
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Âge au plus jeune diagnostic de CCR chez le.a patient.e ?
+    valid_if: 0 <= age_crc_proband <= current_age
+    skip_if: personal_crc_count == 0
+    
+  - variable: personal_ec
+    order: 5
+    widget: Radio
+    widget_args:
+      choices: ["Non", "Oui"]
+      value: Non
+    question: La patiente a-t-elle eu un cancer de l'endomètre ?
+    skip_if: sex == 'M'
+    
+  - variable: age_ec_proband
+    order: 6
+    widget: Number
+    widget_args:
+      precision: 0
+    skip_if: personal_ec == 'Non'
+    valid_if: 0 <= age_ec_proband <= current_age
+    question: Âge au diagnostic du cancer de l'endomètre chez la patiente ?
+    
+  - variable: personal_other_ls
+    order: 7
+    widget: Radio
+    widget_args:
+      choices: ["Non", "Oui"]
+      value: Non
+    question: Y a-t-il cancer lié au syndrome de Lynch chez les apparentés de degré 1 ou 2 ?
+    
+  - variable: fdr_crc_count
+    order: 8
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    skip_if: personal_other_ls == 'Non'
+    question: Nombre de cancers colorectaux chez les apparentés au 1er degré ? (0, 1, ≥2)
+    
+  - variable: age_crc_fdr
+    order: 9
+    widget: Number
+    widget_args:
+      precision: 0
+    skip_if: personal_other_ls == 'Non' or fdr_crc_count == 0
+    question: Âge au plus jeune diagnostic de CCR chez les 1er degré ?
+    
+  - variable: fdr_ec_count
+    order: 10
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    skip_if: personal_other_ls == 'Non'
+    question: Nombre de cancers de l'endomètre chez les 1er degré ? (0, 1, ≥2)
+    
+  - variable: age_ec_fdr
+    order: 11
+    widget: Number
+    widget_args:
+      precision: 0
+    skip_if: personal_other_ls == 'Non' or fdr_ec_count == 0
+    question: Âge au diagnostic endomètre chez les 1er degré ?
+    
+  - variable: fdr_other_ls_count
+    order: 12
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    skip_if: personal_other_ls == 'Non'
+    question: Nombre d'autres cancers liés au syndrome de Lynch chez les 1er degré ?
+    
+  - variable: sdr_crc_count
+    order: 13
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    skip_if: personal_other_ls == 'Non'
+    question: Nombre de CCR chez les apparentés au 2nd degré ? (0, 1, ≥2)
+    
+  - variable: age_crc_sdr
+    order: 14
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Âge au plus jeune diagnostic de CCR chez les 2nd degré ?
+    skip_if: sdr_crc_count == 0
+    
+  - variable: sdr_ec_count
+    order: 15
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    skip_if: personal_other_ls == 'Non'
+    question: Nombre de cancers de l'endomètre chez les 2nd degré ? (0, 1, ≥2)
+    
+  - variable: age_ec_sdr
+    order: 16
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Âge au diagnostic endomètre chez les 2nd degré ?
+    skip_if: personal_other_ls == 'Non'
+    skip_if: sdr_ec_count == 0
+    
+  - variable: sdr_other_ls_count
+    order: 17
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    skip_if: personal_other_ls == 'Non'
+    question: Nombre d'autres cancers liés au syndrome de Lynch chez les 2nd degré ?

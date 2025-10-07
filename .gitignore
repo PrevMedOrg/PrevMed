@@ -1,0 +1,10 @@
+.env*
+.aider*
+**pycache**
+**egg-info
+logs
+survey_data/*gz
+survey_data/**/*csv.lock
+survey_data/**/*csv
+temp_pdfs
+client
