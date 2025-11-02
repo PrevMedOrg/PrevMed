@@ -14,13 +14,13 @@ services:
       - "7860:7860"
     volumes:
       # Mount examples directory for easy access to YAML and scoring scripts
-      - ./examples:/app/examples:ro
+      - ../examples:/app/examples:ro
       # Persist logs between container restarts
       # Note: Create this directory on the host with proper permissions before running
-      - ./logs:/app/logs
+      - ../logs:/app/logs:rw
       # Persist survey data if --save-user-data is enabled
       # Note: Create this directory on the host with proper permissions before running
-      - ./survey_data:/app/survey_data
+      - ../survey_data:/app/survey_data
     environment:
       # Default configuration via environment variables
       # These can be overridden in the command or via .env file
