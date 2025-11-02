@@ -28,7 +28,9 @@ RUN useradd -m -u 1000 prevmed && \
     chown -R prevmed:prevmed /app
 
 # Copy setup files first for better layer caching
+# README.md is needed by setup.py for long_description
 COPY --chown=prevmed:prevmed setup.py .
+COPY --chown=prevmed:prevmed README.md .
 COPY --chown=prevmed:prevmed PrevMed/__init__.py PrevMed/__init__.py
 
 # Install Python dependencies using uv (now in PATH)
