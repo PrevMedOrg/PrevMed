@@ -1,5 +1,5 @@
-# Use Python 3.13 slim for smaller image size
-FROM python:3.13-slim
+# Use Python 3.13.5 slim for smaller image size
+FROM python:3.13.5-slim
 
 # Set environment variables to prevent Python from writing pyc files and buffering stdout/stderr
 ENV PYTHONDONTWRITEBYTECODE=1 \
