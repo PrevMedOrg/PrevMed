@@ -49,12 +49,12 @@ RUN uv pip install --system .
 # Copy the rest of the application
 COPY --chown=prevmed:prevmed . .
 
+# Switch to non-root user
+USER prevmed
+
 # Create directories for logs and data with proper permissions
 RUN mkdir -p /app/logs /app/survey_data /app/temp_pdfs && \
     chown -R prevmed:prevmed /app/logs /app/survey_data /app/temp_pdfs
-
-# Switch to non-root user
-USER prevmed
 
 # Expose the default Gradio port
 EXPOSE 7860
