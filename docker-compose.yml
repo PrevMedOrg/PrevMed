@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  prevmed:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prevmed
+    ports:
+      # Map container port 7860 to host port 7860
+      - "7860:7860"
+    volumes:
+      # Mount examples directory for easy access to YAML and scoring scripts
+      - ./examples:/app/examples:ro
+      # Persist logs between container restarts
+      - ./logs:/app/logs
+      # Persist survey data if --save-user-data is enabled
+      - ./survey_data:/app/survey_data
+    environment:
+      # Default configuration via environment variables
+      # These can be overridden in the command or via .env file
+      - PYTHONUNBUFFERED=1
+    command: >
+      --survey-yaml examples/PREMM5/premm5.yaml
+      --scoring-script examples/PREMM5/premm5.R
+      --port 7860
+    restart: unless-stopped
+    
+    # Uncomment and modify the command below for custom configuration:
+    # command: >
+    #   --survey-yaml examples/PREMM5/premm5.yaml
+    #   --scoring-script examples/PREMM5/premm5.R
+    #   --port 7860
+    #   --save-user-data
+    #   --open-browser
+    #   --debug
+    #   --actual-url "https://survey.example.com"
+    #   --umami-website-id "your-website-id"
+    #   --max-threads 100
