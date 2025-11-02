@@ -8,10 +8,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 # Install system dependencies
 # - r-base: R language support for scoring scripts
+# - r-base-dev: R development headers needed for rpy2
+# - build-essential: gcc, g++, make for compiling Python packages with C extensions
+# - python3-dev: Python development headers for compilation
 # - libtirpc-dev: Required for rpy2 on some systems
 # - curl: For uv installation
 RUN apt-get update && apt-get install -y --no-install-recommends \
     r-base \
+    r-base-dev \
+    build-essential \
+    python3-dev \
     libtirpc-dev \
     curl \
     && rm -rf /var/lib/apt/lists/*
