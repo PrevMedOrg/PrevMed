@@ -31,8 +31,8 @@ RUN useradd -m -u 1000 prevmed && \
 COPY --chown=prevmed:prevmed setup.py .
 COPY --chown=prevmed:prevmed PrevMed/__init__.py PrevMed/__init__.py
 
-# Install Python dependencies using full path to uv
-RUN /root/.cargo/bin/uv pip install --system .
+# Install Python dependencies using uv (now in PATH)
+RUN uv pip install --system .
 
 # Copy the rest of the application
 COPY --chown=prevmed:prevmed . .
