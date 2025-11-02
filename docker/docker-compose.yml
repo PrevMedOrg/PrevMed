@@ -5,6 +5,11 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+      # Pass host user's UID/GID to match permissions on bind-mounted volumes
+      # This allows the container to write to ./logs and ./survey_data directories
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     container_name: prevmed
     ports:
       # Map container port 7860 to host port 7860
@@ -13,8 +18,10 @@ services:
       # Mount examples directory for easy access to YAML and scoring scripts
       - ./examples:/app/examples:ro
       # Persist logs between container restarts
+      # Note: Create this directory on the host with proper permissions before running
       - ./logs:/app/logs
       # Persist survey data if --save-user-data is enabled
+      # Note: Create this directory on the host with proper permissions before running
       - ./survey_data:/app/survey_data
     environment:
       # Default configuration via environment variables

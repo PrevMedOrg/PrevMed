@@ -30,7 +30,11 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 WORKDIR /app
 
 # Create non-root user for running the application
-RUN useradd -m -u 1000 prevmed && \
+# UID/GID can be customized via build args to match host user
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g ${GID} prevmed && \
+    useradd -m -u ${UID} -g ${GID} prevmed && \
     chown -R prevmed:prevmed /app
 
 # Copy setup files first for better layer caching
