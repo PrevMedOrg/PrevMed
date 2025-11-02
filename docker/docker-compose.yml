@@ -3,8 +3,8 @@ version: '3.8'
 services:
   prevmed:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
     container_name: prevmed
     ports:
       # Map container port 7860 to host port 7860
