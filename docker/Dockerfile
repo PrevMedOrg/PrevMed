@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv for fast Python package management
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.cargo/bin:${PATH}"
+# Copy from official uv image is more reliable than install script
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 # Create app directory and set as working directory
 WORKDIR /app
