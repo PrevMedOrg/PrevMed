@@ -93,8 +93,8 @@ PrevMed can be deployed with Docker for simplified and isolated installation:
 
 ```bash
 # Clone the repository
-git clone <repo_url>
-cd <repo_name>
+git clone https://github.com/PrevMedOrg/PrevMed
+cd PrevMed
 
 # Navigate to the docker directory
 cd docker
