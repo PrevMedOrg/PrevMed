@@ -2,7 +2,9 @@ from loguru import logger
 from typing import Dict, Any
 
 
-def execute_scoring_r(code: str, inputs: Dict[str, Any]) -> tuple[str, list[list[str]], dict[str, bool]]:
+def execute_scoring_r(
+    code: str, inputs: Dict[str, Any]
+) -> tuple[str, list[list[str]], dict[str, bool]]:
     """
     Exécute le code de scoring R en utilisant rpy2.
 
@@ -84,14 +86,16 @@ def execute_scoring_r(code: str, inputs: Dict[str, Any]) -> tuple[str, list[list
         options_list = result[2]
         pdf_options = {
             "include_md_in_pdf": bool(options_list.rx2("include_md_in_pdf")[0]),
-            "include_data_in_pdf": bool(options_list.rx2("include_data_in_pdf")[0])
+            "include_data_in_pdf": bool(options_list.rx2("include_data_in_pdf")[0]),
         }
 
         logger.success(
             f"Scoring R terminé avec succès avec {len(table_data)} lignes de table (incluant headers)"
         )
         logger.debug(f"Longueur du markdown R: {len(markdown_str)} caractères")
-        logger.debug(f"Options PDF: include_md_in_pdf={pdf_options['include_md_in_pdf']}, include_data_in_pdf={pdf_options['include_data_in_pdf']}")
+        logger.debug(
+            f"Options PDF: include_md_in_pdf={pdf_options['include_md_in_pdf']}, include_data_in_pdf={pdf_options['include_data_in_pdf']}"
+        )
         return (markdown_str, table_data, pdf_options)
 
 
@@ -180,7 +184,9 @@ def execute_scoring_python(
             f"Scoring Python terminé avec succès avec {len(table_data)} lignes de table (incluant headers)"
         )
         logger.debug(f"Longueur du markdown Python: {len(markdown_str)} caractères")
-        logger.debug(f"Options PDF: include_md_in_pdf={pdf_options.get('include_md_in_pdf', True)}, include_data_in_pdf={pdf_options.get('include_data_in_pdf', True)}")
+        logger.debug(
+            f"Options PDF: include_md_in_pdf={pdf_options.get('include_md_in_pdf', True)}, include_data_in_pdf={pdf_options.get('include_data_in_pdf', True)}"
+        )
         return (markdown_str, table_data, pdf_options)
     except Exception as e:
         logger.error(f"Erreur lors de l'exécution du scoring Python: {str(e)}")

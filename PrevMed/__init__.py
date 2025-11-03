@@ -37,6 +37,7 @@ def enable_debug_console():
         format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}",
     )
 
+
 from PrevMed.utils.version import __VERSION__
 
 __all__ = ["__VERSION__", "enable_debug_console"]
