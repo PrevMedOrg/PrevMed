@@ -173,6 +173,41 @@ prevmed --survey-yaml <yaml> --scoring-script <script> --debug
 prevmed --survey-yaml <yaml> --scoring-script <script> --actual-url "https://survey.hopital.fr/premm5"
 ```
 
+#### Arguments supplémentaires pour demo.launch()
+
+PrevMed permet de passer **n'importe quel argument supporté par Gradio** directement à `demo.launch()`. Tous les arguments non reconnus par PrevMed sont automatiquement transmis à Gradio.
+
+**Formats supportés :**
+
+```bash
+# Arguments avec valeur (chaîne, int, float)
+prevmed --survey-yaml <yaml> --scoring-script <script> --gradio-option value
+
+# Drapeaux booléens (True)
+prevmed --survey-yaml <yaml> --scoring-script <script> --enable-feature
+
+# Drapeaux booléens (False)
+prevmed --survey-yaml <yaml> --scoring-script <script> --no-disable-feature
+```
+
+**Exemples pratiques :**
+
+```bash
+# Désactiver la fermeture automatique du serveur après inactivité
+prevmed --survey-yaml <yaml> --scoring-script <script> --prevent-thread-lock
+
+# Activer le mode favicon personnalisé
+prevmed --survey-yaml <yaml> --scoring-script <script> --favicon-path /path/to/favicon.ico
+
+# Combiner plusieurs arguments
+prevmed --survey-yaml <yaml> --scoring-script <script> \
+    --max-file-size 10000000 \
+    --allowed-paths /data /images \
+    --no-show-error
+```
+
+**Note :** Consultez la [documentation Gradio Blocks](https://www.gradio.app/docs/gradio/blocks) pour la liste complète des arguments supportés par `demo.launch()`.
+
 #### Options de performance
 
 PrevMed inclut des options pour optimiser les performances sous charge importante :
