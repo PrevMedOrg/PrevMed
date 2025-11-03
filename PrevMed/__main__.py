@@ -189,7 +189,7 @@ def cli_launcher():
             # ssr_mode=True,  # server side rendering, experimental, trouble exiting at least
             auth=[(authuser, authpass)] if args.auth else None,
             auth_message="Please login" if args.auth else None,
-            # server_name=server_name,
+            server_name="0.0.0.0",
             server_port=args.port,
         )
     finally:
