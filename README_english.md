@@ -576,6 +576,13 @@ The scoring uses a multinomial logistic regression model with softmax transforma
 
 This project was developed with assistance from [aider.chat](https://github.com/Aider-AI/aider/).
 
+**We happily accept:**
+- 🐛 Bug reports via [Issues](https://github.com/PrevMedOrg/PrevMed/issues)
+- ✨ Feature requests
+- 🔧 Pull Requests to improve the project
+
+Feel free to contribute!
+
 ## License
 
 Currently licensed under GPL-v3. However, we are flexible and open to alternative licensing arrangements - please contact us if you need a different license for your use case.

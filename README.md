@@ -576,6 +576,13 @@ Le scoring utilise un modèle de régression logistique multinomiale avec transf
 
 Ce projet a été développé avec l'assistance de [aider.chat](https://github.com/Aider-AI/aider/).
 
+**Nous accueillons volontiers :**
+- 🐛 Les signalements de bugs via les [Issues](https://github.com/PrevMedOrg/PrevMed/issues)
+- ✨ Les demandes de fonctionnalités
+- 🔧 Les Pull Requests pour améliorer le projet
+
+N'hésitez pas à contribuer !
+
 ## Licence
 
 Actuellement sous licence GPL-v3. Cependant, nous sommes flexibles et ouverts à des arrangements de licence alternatifs - n'hésitez pas à nous contacter si vous avez besoin d'une licence différente pour votre cas d'usage.
