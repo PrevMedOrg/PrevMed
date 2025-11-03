@@ -13,17 +13,17 @@ from PrevMed.utils.pdf import TEMP_PDF_DIR
 def parse_extra_launch_kwargs(unknown_args):
     """
     Parse unknown command-line arguments into kwargs for demo.launch().
-    
+
     Supports formats like:
     - --key value (string/int/float)
     - --flag (boolean True)
     - --no-flag (boolean False)
-    
+
     Parameters
     ----------
     unknown_args : list
         List of unknown command-line arguments
-        
+
     Returns
     -------
     dict
@@ -33,13 +33,13 @@ def parse_extra_launch_kwargs(unknown_args):
     i = 0
     while i < len(unknown_args):
         arg = unknown_args[i]
-        if arg.startswith('--'):
-            key = arg[2:].replace('-', '_')
-            
+        if arg.startswith("--"):
+            key = arg[2:].replace("-", "_")
+
             # Check if this is a boolean flag (no value follows)
-            if i + 1 >= len(unknown_args) or unknown_args[i + 1].startswith('--'):
+            if i + 1 >= len(unknown_args) or unknown_args[i + 1].startswith("--"):
                 # It's a boolean flag
-                if key.startswith('no_'):
+                if key.startswith("no_"):
                     kwargs[key[3:]] = False
                 else:
                     kwargs[key] = True
@@ -61,7 +61,7 @@ def parse_extra_launch_kwargs(unknown_args):
                 i += 2
         else:
             i += 1
-    
+
     return kwargs
 
 
@@ -168,11 +168,13 @@ def cli_launcher():
     )
 
     args, unknown_args = parser.parse_known_args()
-    
+
     # Parse extra kwargs for demo.launch()
     extra_launch_kwargs = parse_extra_launch_kwargs(unknown_args)
     if extra_launch_kwargs:
-        logger.info(f"Arguments supplémentaires pour demo.launch(): {extra_launch_kwargs}")
+        logger.info(
+            f"Arguments supplémentaires pour demo.launch(): {extra_launch_kwargs}"
+        )
 
     # Configure global settings
     settings.save_user_data = args.save_user_data
