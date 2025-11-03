@@ -70,6 +70,12 @@ def cli_launcher():
         help="Numéro de port pour le serveur Gradio (défaut: 7860)",
     )
     parser.add_argument(
+        "--server-name",
+        type=str,
+        default="0.0.0.0",
+        help="Nom du serveur pour le serveur Gradio (défaut: 0.0.0.0)",
+    )
+    parser.add_argument(
         "--save-user-data",
         action="store_true",
         help="Sauvegarder les données utilisateur de manière permanente (journaux CSV, données JSON et rapports PDF). Défaut: False - crée uniquement des PDF temporaires pour téléchargement sans enregistrer de données",
@@ -189,7 +195,7 @@ def cli_launcher():
             # ssr_mode=True,  # server side rendering, experimental, trouble exiting at least
             auth=[(authuser, authpass)] if args.auth else None,
             auth_message="Please login" if args.auth else None,
-            # server_name=server_name,
+            server_name=args.server_name,
             server_port=args.port,
         )
     finally:
