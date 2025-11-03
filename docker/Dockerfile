@@ -31,10 +31,10 @@ WORKDIR /app
 
 # Create non-root user for running the application
 # UID/GID can be customized via build args to match host user
-ARG UID=1000
-ARG GID=1000
-RUN groupadd -g ${GID} prevmed && \
-    useradd -m -u ${UID} -g ${GID} prevmed && \
+ENV UID=1000
+ENV GID=1000
+RUN groupadd -g $GID prevmed && \
+    useradd -m -u $UID -g $GID prevmed && \
     chown -R prevmed:prevmed /app
 
 # Copy setup files first for better layer caching

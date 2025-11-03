@@ -3,11 +3,6 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-      # Pass host user's UID/GID to match permissions on bind-mounted volumes
-      # This allows the container to write to ./logs and ./survey_data directories
-      args:
-        UID: ${UID:-1000}
-        GID: ${GID:-1000}
     container_name: prevmed
     ports:
       # Map container port 7860 to host port 7860
