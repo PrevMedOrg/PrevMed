@@ -11,6 +11,7 @@
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
   - [Installing dependencies](#installing-dependencies)
+  - [Docker Deployment](#docker-deployment)
 - [Usage](#usage)
   - [Basic launch](#basic-launch)
   - [Example with PREMM5](#example-with-premm5)
@@ -85,6 +86,31 @@ uv pip install .
 ```
 
 **Note:** On some systems, you may need to install R separately before installing rpy2.
+
+### Docker Deployment
+
+PrevMed can be deployed with Docker for simplified and isolated installation:
+
+```bash
+# Clone the repository
+git clone <repo_url>
+cd <repo_name>
+
+# Navigate to the docker directory
+cd docker
+
+# Modify docker-compose.yml to specify desired arguments in the 'command' section
+# For example: --survey-yaml, --scoring-script, --save-user-data, etc.
+
+# Launch the container in detached mode
+sudo docker compose up --build -d
+```
+
+**Volume management:**
+- The `logs/` and `survey_data/` folders are **mounted as volumes** to persist data between restarts
+- The `temp_pdfs/` folder is **not mounted** to ensure it remains non-persistent and respects privacy
+
+This configuration allows you to benefit from Docker isolation while preserving important logs and data, without compromising the temporary nature of PDFs.
 
 ## Usage
 
