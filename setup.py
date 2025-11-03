@@ -5,7 +5,7 @@ with open("README.md", "r") as readme:
 
 setup(
     name="PrevMed",
-    version="0.9.6",
+    version="0.9.7",
     description="Générateur dynamique de questionnaires cliniques avec interface Gradio et scoring automatisé en R ou Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
