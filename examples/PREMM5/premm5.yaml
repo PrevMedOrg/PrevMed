@@ -3,7 +3,7 @@
 
 survey_name: PREMM5
 survey_version: 1.0.0
-PrevMed_version: 0.9.5
+PrevMed_version: 0.9.6
 
 # Optional header text - rendered as markdown at top of survey page
 header: |
