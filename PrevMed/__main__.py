@@ -10,6 +10,61 @@ from PrevMed.utils.gui import create_survey_interface
 from PrevMed.utils.pdf import TEMP_PDF_DIR
 
 
+def parse_extra_launch_kwargs(unknown_args):
+    """
+    Parse unknown command-line arguments into kwargs for demo.launch().
+    
+    Supports formats like:
+    - --key value (string/int/float)
+    - --flag (boolean True)
+    - --no-flag (boolean False)
+    
+    Parameters
+    ----------
+    unknown_args : list
+        List of unknown command-line arguments
+        
+    Returns
+    -------
+    dict
+        Dictionary of kwargs to pass to demo.launch()
+    """
+    kwargs = {}
+    i = 0
+    while i < len(unknown_args):
+        arg = unknown_args[i]
+        if arg.startswith('--'):
+            key = arg[2:].replace('-', '_')
+            
+            # Check if this is a boolean flag (no value follows)
+            if i + 1 >= len(unknown_args) or unknown_args[i + 1].startswith('--'):
+                # It's a boolean flag
+                if key.startswith('no_'):
+                    kwargs[key[3:]] = False
+                else:
+                    kwargs[key] = True
+                i += 1
+            else:
+                # It has a value
+                value = unknown_args[i + 1]
+                # Try to convert to appropriate type
+                try:
+                    # Try int first
+                    kwargs[key] = int(value)
+                except ValueError:
+                    try:
+                        # Try float
+                        kwargs[key] = float(value)
+                    except ValueError:
+                        # Keep as string
+                        kwargs[key] = value
+                i += 2
+        else:
+            i += 1
+    
+    return kwargs
+
+
 def cli_launcher():
     # Clean up TEMP_PDF_DIR at startup if it exists and is non-empty
     # This ensures we start with a clean slate and don't accumulate old temporary PDFs
@@ -27,7 +82,14 @@ def cli_launcher():
     parser = argparse.ArgumentParser(
         description="Générateur dynamique de questionnaires à partir de configuration YAML",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="Exemple:\n  prevmed --survey-yaml specifications.yaml --scoring-script scoring.R",
+        epilog=(
+            "Exemple:\n"
+            "  prevmed --survey-yaml specifications.yaml --scoring-script scoring.R\n\n"
+            "Arguments supplémentaires:\n"
+            "  Tous les arguments non reconnus seront passés à demo.launch().\n"
+            "  Voir la documentation Gradio pour les arguments supportés:\n"
+            "  https://www.gradio.app/docs/gradio/blocks"
+        ),
     )
     parser.add_argument(
         "--survey-yaml",
@@ -105,7 +167,12 @@ def cli_launcher():
         help="ID du site web pour le suivi Umami analytics",
     )
 
-    args = parser.parse_args()
+    args, unknown_args = parser.parse_known_args()
+    
+    # Parse extra kwargs for demo.launch()
+    extra_launch_kwargs = parse_extra_launch_kwargs(unknown_args)
+    if extra_launch_kwargs:
+        logger.info(f"Arguments supplémentaires pour demo.launch(): {extra_launch_kwargs}")
 
     # Configure global settings
     settings.save_user_data = args.save_user_data
@@ -197,6 +264,7 @@ def cli_launcher():
             auth_message="Please login" if args.auth else None,
             server_name=args.server_name,
             server_port=args.port,
+            **extra_launch_kwargs,
         )
     finally:
         # Clean up TEMP_PDF_DIR at shutdown if it exists
