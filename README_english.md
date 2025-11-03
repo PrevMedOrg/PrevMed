@@ -606,6 +606,7 @@ The scoring uses a multinomial logistic regression model with softmax transforma
 - Explicit comments for design decisions
 - Use of `loguru` for logging
 - Simple and robust code preferred
+- Use of [Ruff](https://astral.sh/ruff) as linter for code quality assurance
 
 ### Contributions
 

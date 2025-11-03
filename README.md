@@ -606,6 +606,7 @@ Le scoring utilise un modèle de régression logistique multinomiale avec transf
 - Commentaires explicites pour les décisions de design
 - Utilisation de `loguru` pour le logging
 - Code simple et robuste privilégié
+- Utilisation de [Ruff](https://astral.sh/ruff) comme linter pour assurer la qualité du code
 
 ### Contributions
 
