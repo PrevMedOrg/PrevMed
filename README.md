@@ -2,7 +2,7 @@
 
 **Plateforme minimaliste permettant à des personnes non techniques de produire des questionnaires cliniques ne stockant aucune information personnelle.**
 
-> 📖 **English version available:** See [README_english.md](README_english.md) for the English documentation.
+> 📖 **English version available:** See [README_english.md](https://github.com/PrevMedOrg/PrevMed/blob/main/README_english.md) for the English documentation.
 
 ## Table des matières
 

@@ -1,4 +1,4 @@
-> **Note:** A French version of this document is also available: [README.md](README.md)
+> **Note:** A French version of this document is also available: [README.md](https://github.com/PrevMedOrg/PrevMed/blob/main/README.md)
 
 # PrevMed (Preventive Medicine)
 
