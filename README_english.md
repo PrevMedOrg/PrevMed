@@ -754,18 +754,3 @@ Currently licensed under [GNU Affero General Public License](https://en.wikipedi
 
 1. In order to allow anyone to assess their probability of carrying a genetic risk, the support association for genetic epidemiology ASAGE (French law 1901 n°RNA W751217490, J.O. of December 15, 2012) freely provides, at no cost and without storing any personal data, the *ProbaLYNCH* application (under the [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0)): the source code demonstrating the absence of data retention is [available online](https://github.com/PrevMedOrg) and runs on a French hosting provider. The initial application was coded in **R** programming language in 2025, while he was a Junior Doctor in the GENOAP Department (Genetics-Oncogenetics-Adult-Prevention) at CHU de Clermont-Ferrand, by Dr. Laury NICOLAS, currently University Clinical Fellow at Université Antilles-Guyane - Hospital Assistant at CHU de la Guadeloupe. The **R** script was optimized at GENOAP by Mrs. Anna SEROVA-ERARD, Genetic Counselor in Genetics and Predictive Medicine. The illustrations were created by Mrs. Anne SPECQ, Genetic Counselor in Genetics and Predictive Medicine, former intern at GENOAP. The ProbaLynch application was finalized by Olicorp.
 2. Kastrinos et al, J Clin Oncol 35, 2165-2172 (2017). DOI: 10.1200/JCO.2016.69.6120. "Development and Validation of the PREMM5 Model for Comprehensive Risk Assessment of Lynch Syndrome".
-
-
-## Roadmap
-
-<details>
-<summary>Click to show the full roadmap</summary>
-
-- make sure that the UI appears centered on wide screens
-- write a pytest testing suite that uses playwright to click and test both the code and the survey
-- add a new component called "group". If present, look for subcomponents described in the survey. Useful to for example add an image before a question, a markdown text, etc.
-- create a project icon and a favicon, add it to the gradio UI
-- [long term] Check whether we can use gradio lite to do most of the code on the client, making it even more privacy friendly.
-
-
-</details>

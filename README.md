@@ -756,19 +756,3 @@ Actuellement sous licence [GNU Affero General Public License](https://en.wikiped
 
 1. Afin de permettre à tout un chacun d’évaluer sa probabilité d’être porteur du risque génétique, l’association de soutien à la génétique épidémiologique ASAGE (loi 1901 n°RNA W751217490, J.O. du 15 décembre 2012), met à disposition libre, gratuite et sans stockage d’aucune donnée personnelle, l’application *ProbaLYNCH* (sous licence [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0)) : le code informatique montrant l’absence de conservation des données est [accessible en ligne](https://github.com/PrevMedOrg) et tourne chez un hébergeur français. L’application initiale a été codée en langage informatique **R** en 2025, quand il était Dr Junior dans le Service GENOAP (Génétique-Oncogénétique-Adulte-Prévention) du CHU de Clermont-Ferrand, par le Dr Laury NICOLAS, actuellement Chef de Clinique de l’Université Antilles-Guyane - Assistant des Hôpitaux au CHU de la Guadeloupe. Le script **R** a été optimisé à GENOAP par Madame Anna SEROVA-ERARD, Conseillère en Génétique et Médecine Prédictive. Les illustrations ont été réalisées par Madame Anne SPECQ, Conseillère en Génétique et Médecine Prédictive, ancienne stagiaire de GENOAP. L'application ProbaLynch a été finalisée par Olicorp.
 2. Kastrinos et al, J Clin Oncol 35, 2165-2172 (2017). DOI: 10.1200/JCO.2016.69.6120. « Development and Validation of the PREMM5 Model for Comprehensive Risk Assessment of Lynch Syndrome ».
-
-
-
-## Roadmap
-
-<details>
-<summary>Cliquer pour afficher la feuille de route complète</summary>
-
-- s'assurer que l'interface utilisateur apparaît centrée sur les écrans larges
-- écrire une suite de tests pytest utilisant playwright pour tester le code et le questionnaire
-- ajouter un nouveau composant appelé "group". Si présent, rechercher les sous-composants décrits dans le questionnaire. Utile par exemple pour ajouter une image avant une question, un texte markdown, etc.
-- créer une icône de projet et un favicon, les ajouter à l'interface Gradio
-- [long terme] Vérifier si nous pouvons utiliser gradio lite pour exécuter la plupart du code côté client, rendant la solution encore plus respectueuse de la vie privée
-
-
-</details>
