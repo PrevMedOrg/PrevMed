@@ -1,0 +1,13 @@
+.env*
+.aider*
+**pycache**
+**egg-info
+logs
+survey_data/*gz
+survey_data/**/*csv.lock
+survey_data/**/*csv
+temp_pdfs
+client
+deploy.sh
+# Legal notices contain site-specific information, not committed
+mentions_legales.md

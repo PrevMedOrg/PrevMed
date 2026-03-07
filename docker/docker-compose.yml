@@ -1,0 +1,61 @@
+services:
+  prevmed:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      # Build arguments for installation mode:
+      # - INSTALL_MODE=local (default): Install from local repository for development
+      # - INSTALL_MODE=pypi: Install from PyPI for production deployment
+      args:
+        INSTALL_MODE: local  # Change to "pypi" for production
+    container_name: prevmed
+    # Security options to prevent privilege escalation
+    security_opt:
+      - no-new-privileges:true
+    # Explicitly run as nobody user (UID 65534) for security
+    user: "65534:65534"
+    # Make container filesystem read-only for security
+    read_only: true
+    # tmpfs mounts for directories that need to be writable (R/Python temp files)
+    tmpfs:
+      - /tmp:size=100M,mode=1777
+    ports:
+      # Map container port 7860 to host port 7860
+      - "7860:7860"
+    volumes:
+      # Mount examples directory for easy access to YAML and scoring scripts
+      - ../examples:/app/examples:ro
+      # Persist logs between container restarts
+      # Note: Create this directory on the host with proper permissions before running
+      - ../logs:/app/logs:rw
+      # Persist survey data if --save-user-data is enabled
+      # Note: Create this directory on the host with proper permissions before running
+      - ../survey_data:/app/survey_data
+    environment:
+      # Default configuration via environment variables
+      # These can be overridden in the command or via .env file
+      - PYTHONUNBUFFERED=1
+      # Uncomment to set container timezone (default is UTC)
+      # - TZ=Europe/Paris
+    command: >
+      --survey-yaml examples/ProbaLYNCH/ProbaLYNCH.yaml
+      --scoring-script examples/ProbaLYNCH/ProbaLYNCH.R
+      --port 7860
+    restart: unless-stopped
+    
+    # Uncomment and modify the command below for custom configuration:
+    # command: >
+    #   --survey-yaml examples/ProbaLYNCH/ProbaLYNCH.yaml
+    #   --scoring-script examples/ProbaLYNCH/ProbaLYNCH.R
+    #   --port 7860
+    #   --save-user-data
+    #   --open-browser
+    #   --debug
+    #   --actual-url "https://survey.example.com"
+    #   --auth "username,password"
+    #   --umami-url "https://analytics.example.com"
+    #   --umami-website-id "your-website-id"
+    #   --umami-ignore-dnt
+    #   --terms-md examples/terms_example.md
+    #   --max-threads 100
+    #   --no-queue

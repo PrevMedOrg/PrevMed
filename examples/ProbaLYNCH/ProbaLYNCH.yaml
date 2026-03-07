@@ -1,0 +1,270 @@
+# ProbaLYNCH Clinical Questionnaire Configuration
+# This YAML file defines the structure and flow of the ProbaLYNCH survey for Lynch syndrome risk assessment
+
+page_title: "### ProbaLYNCH — Évaluez votre risque de syndrome de Lynch | Prévention Familiale"
+survey_name: ProbaLYNCH
+survey_version: 1.0.0
+show_survey_version: true
+show_webapp_version: false
+legal_summary: "Mentions légales et contact"
+PrevMed_version: 0.11.0
+
+# Optional: display survey_name as a title at the top of the page (default: true)
+show_survey_title: false
+
+# Optional header text - rendered as markdown at top of survey page
+header: |
+   <h1 style="text-align: center;">Avez-vous eu un cas de cancer colorectal dans votre famille ?</h1>
+
+   <h2 style="text-align: center;">Un seul cas de cancer colorectal dans votre famille, il y a 50 ans, peut révéler un risque majeur de cancer <a href="https://preventionfamiliale.fr/Comprendre-la-Genetique.pdf">génétique</a> pour vous, maintenant</h2>
+
+   <img src="https://preventionfamiliale.fr/Logo.svg" style="float: right; height: 37.5em;" alt="Logo Prévention Familiale">
+
+   <details><summary>Plus d'information (clic sur triangles)</summary>
+
+   <div class="force_justify_text">
+
+   En effet, plusieurs cancers différents dans une famille, *a priori* sans rapport entre eux, peuvent en fait révéler un risque génétique familial fréquent et massivement sous-diagnostiqué.
+
+   Par exemple, pour une femme de 41 ans indemne de cancer, dont le seul cas de cancer colorectal dans la famille est un frère qui en est décédé à 60 ans, qui a sa mère décédée de cancer de l’utérus à 75 ans, une soeur qui en est également décédée à 65 ans, un autre frère décédé de cancer du pancréas à 62 ans et son grand-père maternel décédé d’un cancer de la vessie à 80 ans : le risque pour cette femme d’être porteuse de la fragilité fréquente, dite du « [syndrome de Lynch](https://syndrome-de-lynch.fr) », est de 10%.
+
+   Le test génétique confirmant ce diagnostic, cette femme est à risque majeur de cancer depuis l’âge de 25 ans. Ce n’est peut-être que grâce à son mode de vie exemplaire qu’elle est restée indemne jusque là, se nourrissant de manière équilibrée, sans excès d’alcool, sans fumer, surveillant son poids et randonnant tous les week-ends. Une protection adaptée va lui assurer désormais une espérance de vie normale. Dès leur majorité, ses enfants pourront bénéficier du test génétique, afin de commencer d’emblée, si besoin, une prévention adaptée. Sans délai, chaque adulte de la famille peut préciser son propre risque génétique, afin de bénéficier éventuellement d’une prévention adaptée.
+
+   <details><summary>150&nbsp;000 personnes en danger sans le savoir, qui peuvent avoir transmis leur risque de cancer à leurs enfants</summary>
+
+   En effet, environ 150&nbsp;000 personnes sont actuellement en France porteuses d’un risque génétique majeur, particulièrement de cancer colorectal, sans le savoir et, par conséquent, sans être protégées de leur risque majeur de cancer du « [syndrome de Lynch](https://syndrome-de-lynch.fr) » et sans protéger leurs enfants auxquels elles peuvent avoir transmis leur risque. En bref, il s’agit d’une [maladie héréditaire](https://preventionfamiliale.fr/Comprendre-la-Genetique.pdf) fréquente (environ une personne sur 300 porte la fragilité génétique), actuellement très sous-diagnostiquée en France (seulement 20&nbsp;000 personnes environ ont été diagnostiquées depuis 2003 : 12% des personnes porteuses de la fragilité), car se manifestant souvent de manière différente chez plusieurs membres de la famille, sans attirer l’attention :
+
+   - certains membres porteurs de la famille restent indemnes, alors qu’ils peuvent avoir transmis la fragilité génétique à un ou plusieurs de leurs enfants, masquant le caractère héréditaire, d’autant que de nombreux membres de la famille sont non-porteurs,
+
+   - d’autres membres porteurs de la famille sont bien atteints de cancers, mais sans lien évident entre eux (à moins d’évoquer le syndrome de Lynch).
+
+   - En effet, le risque de cancer concerne :
+       - non seulement le colon et le rectum,
+       - mais aussi, chez la femme, l’utérus (le corps de l’utérus et non le col) et, à un moindre degré, l’ovaire,
+       - ainsi que, avec un risque faible, l’estomac, le petit intestin, la vésicule biliaire et les voies biliaires, le pancréas, les voies urinaires (le rein, l’uretère et la vessie), la peau (« carcinome sébacé », « kérato-acanthome ») et le cerveau.
+
+   </details>
+
+   <details><summary>100 ans pour rattraper le retard diagnostique en se limitant aux nouveaux cas par an</summary>
+
+   Une analyse spécifique de la tumeur permet de dépister les cas suspects de syndrome de Lynch, une consultation de génétique étant alors indiquée, mais cette analyse n’est recommandée systématiquement que depuis 2021 pour tous les nouveaux cancers colorectaux. Le syndrome de Lynch cause 3% des 47&nbsp;000 cancers colorectaux annuels, soit environ 1&nbsp;400 cas par an : si on se limite au seul diagnostic du syndrome de Lynch chez les nouvelles personnes atteintes de cancer du colon ou du rectum chaque année, soit 1&nbsp;400 diagnostics par an, plus d’un siècle serait nécessaire pour rattraper le retard.
+
+   </details>
+
+   <details><summary>Dépistage sans délai avec les antécédents de cancer, personnels et familiaux</summary>
+
+   Chaque personne porteuse de la fragilité du syndrome de Lynch l’a reçue de l’un de ses parents, venant de l’un des grands-parents : cette personne peut l’avoir transmise à de nombreuses autres personnes dans la famille, chacune pouvant contribuer à révéler la fragilité familiale quand elle est atteinte d’un cancer du syndrome de Lynch. Toutefois, parmi les personnes porteuses de la fragilité, 20 à 80% (selon le gène en cause) n’ont développé aucun cancer du Lynch à 74 ans. Ainsi, la prise en compte sans délai des antécédents de cancers survenus dans les familles dans le questionnaire ci-dessous, à commencer par le cancer colorectal, permet de rattraper l’essentiel du retard diagnostic sans délai !
+
+   </details>
+
+   <details><summary>Prévention familiale dès le diagnostic</summary>
+
+   La prévention familiale des personnes porteuses de la fragilité du syndrome de Lynch commence par la prévention du cancer colo-rectal grâce à des coloscopies adaptées. Typiquement, il s’agit, en lien avec une [consultation d’oncogénétique (génétique du cancer)](https://www.cancer.fr/professionnels-de-sante/l-organisation-de-l-offre-de-soins/organisation-des-soins-pour-les-predispositions-genetiques/le-dispositif-national-d-oncogenetique), souvent dès l’âge de 25 ans, tous les 2 ans, d’une coloscopie optimisée avec un colorant. C’est donc très différent de la coloscopie courante, à partir de 45 ans, tous les 5 ans, en cas d’apparenté direct atteint de la forme courantes de cancer ou de polypes (« adénomateux ») colorectaux. En outre, chez la femme, une surveillance spécifique annuelle du corps de l’utérus est nécessaire (le frottis cervico-utérin ne surveille que le col). La protection contre les autres risques est organisée dans le cadre d’un « programme personnalisé de suivi » (PPS), en lien avec la consultation d’oncogénétique. En suivant son PPS, l’espérance de vie est normale.
+
+   </details>
+
+   <details><summary>Evaluer votre risque en 2 à 6 minutes</summary>
+
+   Le questionnaire *ProbaLYNCH* ci-dessous vous demande trois informations sur les cancers :
+
+   - chez vous,
+
+   - chez vos apparentés directs : parents, frères et sœurs, enfants,
+
+   - chez leurs apparentés directs : grands-parents, oncles et tantes, neveux et nièces, petits enfants, demi-frères et sœurs.
+
+   *ProbaLYNCH* permet d’estimer, à titre indicatif, votre probabilité d’être une personne porteuse de la fragilité génétique du syndrome de Lynch, à partir des cas de cancer colorectal, de cancer du corps de l’utérus ("endomètre") chez les femmes, ou des autres cancers du syndrome de Lynch. En répondant à chacune des questions dans l’ordre où elles vous arrivent, vous obtiendrez à la fin du questionnaire une estimation de votre probabilité avec des recommandations à discuter avec votre médecin généraliste (sauvegardez le pdf : rien n’est stocké !).
+
+   En effet, il est important d’éviter de méconnaître un « [syndrome de Lynch](https://syndrome-de-lynch.fr) », dès lors qu’a été diagnostiqué, chez vous ou dans votre famille proche, un cancer du colon ou du rectum, mais aussi du corps de l’utérus ou de nombreux autres organes :
+
+   - ovaire,
+
+   - estomac, intestin grêle, vésicule biliaire, voies biliaires, pancréas,
+
+   - voies urinaires (rein, uretère, vessie),
+
+   - peau : « carcinome sébacé » ou « kérato-acanthome »,
+
+   - cerveau (glioblastome).
+
+   Le syndrome de Lynch est l’une des deux formes fréquentes de prédisposition génétique au cancer, dont les gènes ont été découverts dans les années 1990, mais encore très largement sous-diagnostiquée, contrairement à l’autre forme, qui concerne principalement le sein et l’ovaire, aussi fréquente et découverte à la même période : seulement environ 20&nbsp;000 des 170&nbsp;000 personnes portant le risque génétique de syndrome de Lynch en France (12%) sont actuellement diagnostiquées. Or, le diagnostic de syndrome de Lynch permet la mise en place pour la personne diagnostiquée d’un programme personnalisé de suivi (PPS), afin de la protéger. Pour la famille, le diagnostic permet le dépistage du risque génétique, afin de mettre en place un PPS pour les personnes apparentées qui portent la fragilité familiale.
+
+   Ce site, focalisé sur le dépistage du syndrome de Lynch, permet à tout un chacun, librement, sans préciser son identité et sans qu’aucune donnée ne soit stockée, d’estimer sa probabilité d’être une personne porteuse de la fragilité génétique du syndrome de Lynch et de recevoir des recommandations adaptées (1). D’après les cancers survenus chez la personne ou dans sa famille proche, une estimation de la probabilité d’être une personne porteuse de la fragilité du syndrome de Lynch est donnée, à titre indicatif, par l’application *ProbaLYNCH* (2), utilisant une formule publiée par le *Dana Farber Institute* de l’Université Harvard en 2017 (3). L’objectif est de contribuer modestement à rattraper le très grand retard de diagnostic de ce risque génétique majeur de cancer.
+
+   </details>
+
+   <details><summary>Références</summary>
+
+   1. La seule manière de conserver les recommandations qui sont données est de sauvegarder le pdf transitoire.
+   2. Afin de permettre à tout un chacun d’évaluer sa probabilité d’être porteur du risque génétique, l’association de soutien à la génétique épidémiologique ASAGE (loi 1901 n°RNA W751217490, J.O. du 15 décembre 2012), met à disposition libre, gratuite et sans stockage d’aucune donnée personnelle, l’application *ProbaLYNCH* (sous licence [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0)) : le code informatique montrant l’absence de conservation des données est [accessible en ligne](https://github.com/PrevMedOrg) et tourne chez un hébergeur français. L’application initiale a été codée en langage informatique **R** en 2025, quand il était Dr Junior dans le Service GENOAP (Génétique-Oncogénétique-Adulte-Prévention) du CHU de Clermont-Ferrand, par le Dr Laury NICOLAS, actuellement Chef de Clinique de l’Université Antilles-Guyane - Assistant des Hôpitaux au CHU de la Guadeloupe. Le script **R** a été optimisé à GENOAP par Madame Anna SEROVA-ERARD, Conseillère en Génétique et Médecine Prédictive. Les illustrations ont été réalisées par Madame Anne SPECQ, Conseillère en Génétique et Médecine Prédictive, ancienne stagiaire de GENOAP. L'application ProbaLynch a été finalisée par Olicorp.
+   3. Kastrinos et al, J Clin Oncol 35, 2165-2172 (2017). DOI: 10.1200/JCO.2016.69.6120. « Development and Validation of the PREMM5 Model for Comprehensive Risk Assessment of Lynch Syndrome ».
+
+   </details>
+
+
+   </details>
+
+   </div>
+
+questions_header: "## Evaluez votre probabilité de porter sans le savoir la fragilité dite du [syndrome de Lynch](https://syndrome-de-lynch.fr)"
+
+questions:
+  - variable: sex
+    order: 1
+    widget: Radio
+    widget_args:
+      choices: ["M", "F"]
+    question: Votre sexe ?
+
+  - variable: current_age
+    order: 2
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Votre âge actuel (en années) ?
+    valid_if: current_age >= 10 and current_age <= 120
+    invalid_message: L'âge doit être compris entre 10 et 120 ans.
+
+  - variable: personal_crc_count
+    order: 3
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Vous avez eu combien de cancers colorectaux ?
+    valid_if: personal_crc_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+
+  - variable: age_crc_proband
+    order: 4
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Votre âge à votre premier cancer colorectal ?
+    valid_if: 0 <= age_crc_proband <= current_age
+    skip_if: personal_crc_count == 0
+
+  - variable: personal_ec
+    order: 5
+    widget: Radio
+    widget_args:
+      choices: ["Non", "Oui"]
+      value: Non
+    question: "Avez-vous été atteinte d'un cancer du « corps » de l'utérus (adénocarcinome de l'« endomètre », cancer du col de l'utérus exclu) ?"
+    skip_if: sex == 'M'
+
+  - variable: age_ec_proband
+    order: 6
+    widget: Number
+    widget_args:
+      precision: 0
+    skip_if: personal_ec == 'Non'
+    valid_if: 0 <= age_ec_proband <= current_age
+    question: Votre âge au diagnostic de cancer du corps de l'utérus (endomètre) ?
+
+  - variable: personal_other_ls
+    order: 7
+    widget: Radio
+    widget_args:
+      choices: ["Non", "Oui"]
+      value: Non
+    question: "Etes-vous une personne qui a été atteinte d'au moins un cancer de l'un de ces organes : l'ovaire, l'estomac, l'intestin grêle, la vésicule biliaire ou les voies biliaires, le pancréas, les voies urinaires (rein-uretère-vessie), la peau («carcinome sébacé » ou « kérato-acanthome ») ou le cerveau ?"
+
+  - variable: fdr_crc_count
+    order: 8
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    question: Combien de personnes ont été atteintes de cancer colorectal parmi vos frères et sœurs, vos enfants, votre père ou votre mère ?
+    valid_if: fdr_crc_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+
+  - variable: age_crc_fdr
+    order: 9
+    widget: Number
+    widget_args:
+      precision: 0
+    skip_if: fdr_crc_count == 0
+    question: Age au plus précoce cancer colorectal, parmi ceux diagnostiqués chez vos frères et sœurs, vos enfants, votre père et votre mère ?
+    valid_if: age_crc_fdr >= 0
+    invalid_message: L'âge ne peut pas être négatif.
+
+  - variable: fdr_ec_count
+    order: 10
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    question: "Nombre de cancers de l'utérus (prendre « utérus » en l'absence de précision sur la partie de l'utérus atteinte, mais si la précision est connue, ne garder que le cancer du « corps » de l'utérus = adénocarcinome de l'« endomètre », excluant le cancer du col de l'utérus) chez vos soeurs, vos filles et votre mère ?"
+    valid_if: fdr_ec_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+
+  - variable: age_ec_fdr
+    order: 11
+    widget: Number
+    widget_args:
+      precision: 0
+    skip_if: fdr_ec_count == 0
+    question: Age au plus précoce cancer de l’utérus, parmi ceux diagnostiqués chez vos sœurs, vos filles et votre mère ?
+    valid_if: age_ec_fdr >= 0
+    invalid_message: L'âge ne peut pas être négatif.
+
+  - variable: fdr_other_ls_count
+    order: 12
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    question: "Nombre d'autres cancers du syndrome de Lynch (l'ovaire, l'estomac, l'intestin grêle, la vésicule biliaire ou les voies biliaires, le pancréas, les voies urinaires (rein-uretère-vessie), la peau («carcinome sébacé » ou « kérato-acanthome ») ou le cerveau) parmi vos frères et sœurs, vos enfants, votre père et votre mère ?"
+    valid_if: fdr_other_ls_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+
+  - variable: sdr_crc_count
+    order: 13
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    question: Nombre de cancer colorectaux chez vos grands-parents, oncles et tantes, neveux et nièces, petits-enfants, demi-frères et demi-sœurs ?
+    valid_if: sdr_crc_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+
+  - variable: age_crc_sdr
+    order: 14
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Age au plus précoce cancer colorectal, parmi ceux diagnostiqués chez vos grands-parents, oncles et tantes, neveux et nièces, petits-enfants, demi-frères et demi-sœurs ?
+    skip_if: sdr_crc_count == 0
+    valid_if: age_crc_sdr >= 0
+    invalid_message: L'âge ne peut pas être négatif.
+
+  - variable: sdr_ec_count
+    order: 15
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    question: "Nombre de cancers de l'utérus (prendre « utérus » en l'absence de précision sur la partie de l'utérus atteinte, mais si la précision est connue, ne garder que le cancer du « corps » de l'utérus = adénocarcinome de l'« endomètre », excluant le cancer du col de l'utérus) chez vos grands-mères, tantes, nièces et petites-filles ?"
+    valid_if: sdr_ec_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
+
+  - variable: age_ec_sdr
+    order: 16
+    widget: Number
+    widget_args:
+      precision: 0
+    question: Age au plus précoce cancer de l’utérus parmi ceux diagnostiqués chez vos grands-mères, tantes, nièces, petites-filles et demi-sœurs ?
+    skip_if: sdr_ec_count == 0
+    valid_if: age_ec_sdr >= 0
+    invalid_message: L'âge ne peut pas être négatif.
+
+  - variable: sdr_other_ls_count
+    order: 17
+    widget: Number
+    widget_args:
+      precision: 0
+      value: 0
+    question: "Nombre d'autres cancers du syndrome de Lynch (l'ovaire, l'estomac, l'intestin grêle, la vésicule biliaire ou les voies biliaires, le pancréas, les voies urinaires (rein-uretère-vessie), la peau («carcinome sébacé » ou « kérato-acanthome ») ou le cerveau) chez vos grands-parents, oncles et tantes, neveux et nièces, petits-enfants, demi-frères, demi-sœurs ?"
+    valid_if: sdr_other_ls_count >= 0
+    invalid_message: Le nombre de cancers ne peut pas être négatif.
