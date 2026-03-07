@@ -39,7 +39,6 @@
   - [Contributions](#contributions)
 - [License](#license)
 - [References and Credits](#references-and-credits)
-- [Roadmap](#roadmap)
 
 ## Main Objective
 

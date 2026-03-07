@@ -39,7 +39,6 @@
   - [Contributions](#contributions)
 - [Licence](#licence)
 - [Références et Crédits](#références-et-crédits)
-- [Roadmap](#roadmap)
 
 ## Objectif Principal
 
