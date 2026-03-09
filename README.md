@@ -722,7 +722,7 @@ Le questionnaire ProbaLYNCH évalue le risque de mutations dans les gènes MLH1,
 - Les âges au diagnostic
 - L'histoire familiale (apparentés du 1er et 2ème degré)
 
-Le modèle ProbaLYNCH utilise un modèle de régression logistique multinomiale avec transformation softmax pour calculer les probabilités de mutation pour chaque gène d'une liste prédéterminée de gênes. Une adaptation en langage R a été écrite en 2025 par Laury NICOLAS, médecin au CHU de Clermont-Ferrand, France. Ce script R à ensuite été optimisé par madame Anna Serova-Erard au CHU de Clermont-Ferrand, France.
+Le modèle ProbaLYNCH utilise un modèle de régression logistique multinomiale avec transformation softmax pour calculer les probabilités de mutation pour chaque gène d'une liste prédéterminée de gènes. Une adaptation en langage R a été écrite en 2025 par Laury NICOLAS, médecin au CHU de Clermont-Ferrand, France. Ce script R à ensuite été optimisé par madame Anna Serova-Erard au CHU de Clermont-Ferrand, France.
 
 ## Développement
 
