@@ -42,7 +42,7 @@
 
 ## Main Objective
 
-PrevMed is designed to **simplify the clinical workflow** by enabling healthcare professionals to easily create clinical decision support questionnaires with common programming skills: a script in [R](https://en.wikipedia.org/wiki/R_%28programming_language%29) (or [Python](https://en.wikipedia.org/wiki/Python_(programming_language))) and a `.yaml` file.
+PrevMed is designed to enable healthcare professionals with minimal IT skills to easily create clinical decision support questionnaires with a script ([R](https://en.wikipedia.org/wiki/R_%28programming_language%29) or [Python](https://en.wikipedia.org/wiki/Python_(programming_language))) and a `.yaml` file.
 
 **How it works:**
 1. The patient fills out the questionnaire on the web interface
@@ -50,11 +50,11 @@ PrevMed is designed to **simplify the clinical workflow** by enabling healthcare
 3. The patient comes to consultation with this PDF
 4. **No personal data is stored** on the server
 
-This system **saves everyone time**: the patient prepares their answers in advance, and the clinician immediately has structured information and automatically calculated scores.
+This system **saves everyone time**: the patient prepares their answers in advance and the clinician immediately has structured information, or even automatically calculated scores, as in the ProbaLynch application, an example application of PrevMed.
 
 ## Technical Description
 
-PrevMed allows creating interactive clinical questionnaires from YAML configuration files. The system automatically generates a web interface with Gradio, handles conditional question logic, executes scoring scripts (R or Python), and produces PDF reports.
+PrevMed allows creating interactive clinical questionnaires from YAML configuration files. The system automatically generates a web interface with Gradio, handles conditional question logic, executes scoring scripts (R or Python) and produces PDF reports.
 
 **Main features:**
 
