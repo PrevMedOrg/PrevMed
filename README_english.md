@@ -712,15 +712,15 @@ Logs are automatically saved in `./logs/` with daily rotation and 365-day retent
 
 ## ProbaLYNCH Example
 
-To illustrate how PrevMed works, we have implemented the ProbaLYNCH questionnaire (see [References and Credits](#references-and-credits)).
+To illustrate how PrevMed works, we have implemented the ProbaLYNCH questionnaire ([preventionfamiliale.fr](https://preventionfamiliale.fr/)) (see [References and Credits](#references-and-credits)).
 
-The ProbaLYNCH questionnaire assesses the risk of mutations in the MLH1, MSH2, MSH6 and PMS2 genes (Lynch syndrome) based on:
+The ProbaLYNCH questionnaire assesses the risk of mutations in the MLH1, MSH2, MSH6 and PMS2 genes ([Lynch syndrome](https://syndrome-de-lynch.fr/)) based on:
 
-- Personal cancer history (colorectal, endometrial, other)
+- Personal cancer history (colorectal, uterine ("endometrial"), other)
 - Ages at diagnosis
-- Family history (1st and 2nd degree relatives)
+- Family history (close relatives)
 
-The ProbaLYNCH model uses a multinomial logistic regression model with softmax transformation to calculate mutation probabilities for each gene from a predetermined list of genes. An R language adaptation was written in 2025 by Laury NICOLAS, MD at CHU de Clermont-Ferrand, France. This R script was subsequently optimized by Anna Serova-Erard at CHU de Clermont-Ferrand, France.
+The ProbaLYNCH model uses a multinomial logistic regression model with softmax transformation to calculate mutation probabilities for each gene from a predetermined list of genes. An R language adaptation was written in 2025 by Laury NICOLAS, MD from CHU de Pointe-à-Pitre, while he was a Junior Doctor in the GENOAP Department (Genetics-Oncogenetics-Adult-Prevention) at CHU de Clermont-Ferrand. This R script was subsequently optimized by Anna Serova-Erard, Genetic Counselor in Genetics and Predictive Medicine at GENOAP.
 
 ## Development
 

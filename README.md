@@ -42,7 +42,7 @@
 
 ## Objectif Principal
 
-PrevMed est conçu pour **simplifier le workflow clinique** en permettant aux professionnels de santé de créer facilement des questionnaires d'aide à la décision clinique avec des compétences courantes en programmation : un script en langage [R](https://en.wikipedia.org/wiki/R_%28programming_language%29) (ou [Python](https://en.wikipedia.org/wiki/Python_(programming_language))) et un fichier `.yaml`.
+PrevMed est conçu pour permettre aux professionnels de santé possédant quelques compétences minimales en informatique de créer facilement des questionnaires d'aide à la décision clinique avec un script ([R](https://en.wikipedia.org/wiki/R_%28programming_language%29) ou [Python](https://en.wikipedia.org/wiki/Python_(programming_language))) et un fichier `.yaml`.
 
 **Fonctionnement :**
 1. Le patient remplit le questionnaire sur l'interface web
@@ -50,11 +50,11 @@ PrevMed est conçu pour **simplifier le workflow clinique** en permettant aux pr
 3. Le patient vient en consultation avec ce PDF
 4. **Aucune donnée personnelle n'est stockée** sur le serveur
 
-Ce système fait **gagner du temps à tout le monde** : le patient prépare ses réponses en amont, et le clinicien dispose immédiatement d'informations structurées et de scores calculés automatiquement.
+Ce système fait **gagner du temps à tout le monde** : le patient prépare ses réponses en amont et le clinicien dispose immédiatement d'informations structurées, voire de scores calculés automatiquement, comme dans l’application ProbaLynch, exemple d’application de PrevMed.
 
 ## Description Technique
 
-PrevMed permet de créer des questionnaires cliniques interactifs à partir de fichiers de configuration YAML. Le système génère automatiquement une interface web avec Gradio, gère la logique conditionnelle des questions, exécute des scripts de scoring (R ou Python), et produit des rapports PDF.
+PrevMed permet de créer des questionnaires cliniques interactifs à partir de fichiers de configuration YAML. Le système génère automatiquement une interface web avec Gradio, gère la logique conditionnelle des questions, exécute des scripts de scoring (R ou Python) et produit des rapports PDF.
 
 **Caractéristiques principales :**
 
@@ -714,15 +714,15 @@ Les logs sont automatiquement sauvegardés dans `./logs/` avec rotation journali
 
 ## Exemple ProbaLYNCH
 
-Pour illustrer le fonctionnement de PrevMed, nous avons implémenté le questionnaire ProbaLYNCH (cf. [Références et Crédits](#références-et-crédits)).
+Pour illustrer le fonctionnement de PrevMed, nous avons implémenté le questionnaire ProbaLYNCH ([preventionfamiliale.fr](https://preventionfamiliale.fr/)) (cf. [Références et Crédits](#références-et-crédits)).
 
-Le questionnaire ProbaLYNCH évalue le risque de mutations dans les gènes MLH1, MSH2, MSH6 et PMS2 (syndrome de Lynch) basé sur :
+Le questionnaire ProbaLYNCH évalue le risque de mutations dans les gènes MLH1, MSH2, MSH6 et PMS2 ([syndrome de Lynch](https://syndrome-de-lynch.fr/)) basé sur :
 
-- L'histoire personnelle de cancers (colorectal, endomètre, autres)
+- L'histoire personnelle de cancers (colorectal, utérus (« endomètre »), autres)
 - Les âges au diagnostic
-- L'histoire familiale (apparentés du 1er et 2ème degré)
+- L'histoire familiale (apparentés proches)
 
-Le modèle ProbaLYNCH utilise un modèle de régression logistique multinomiale avec transformation softmax pour calculer les probabilités de mutation pour chaque gène d'une liste prédéterminée de gènes. Une adaptation en langage R a été écrite en 2025 par Laury NICOLAS, médecin au CHU de Clermont-Ferrand, France. Ce script R à ensuite été optimisé par madame Anna Serova-Erard au CHU de Clermont-Ferrand, France.
+Le modèle ProbaLYNCH utilise un modèle de régression logistique multinomiale avec transformation softmax pour calculer les probabilités de mutation pour chaque gène d'une liste prédéterminée de gènes. Une adaptation en langage R a été écrite en 2025 par Laury NICOLAS, médecin du CHU de Pointe-à-Pitre, quand il était Dr Junior dans le Service GENOAP (Génétique-Oncogénétique-Adulte-Prévention) du CHU de Clermont-Ferrand. Ce script R à ensuite été optimisé par madame Anna Serova-Erard,  Conseillère en Génétique et Médecine Prédictive à GENOAP.
 
 ## Développement
 
