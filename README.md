@@ -736,7 +736,7 @@ Le modèle ProbaLYNCH utilise un modèle de régression logistique multinomiale 
 
 ### Contributions
 
-Ce projet a été développé avec l'assistance de [aider.chat](https://github.com/Aider-AI/aider/).
+Ce projet a été développé avec l'assistance de [aider.chat](https://github.com/Aider-AI/aider/) et [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 **Nous accueillons volontiers :**
 - 🐛 Les signalements de bugs via les [Issues](https://github.com/PrevMedOrg/PrevMed/issues)

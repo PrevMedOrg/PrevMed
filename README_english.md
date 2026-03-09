@@ -734,7 +734,7 @@ The ProbaLYNCH model uses a multinomial logistic regression model with softmax t
 
 ### Contributions
 
-This project was developed with assistance from [aider.chat](https://github.com/Aider-AI/aider/).
+This project was developed with assistance from [aider.chat](https://github.com/Aider-AI/aider/) and [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
 
 **We happily accept:**
 - 🐛 Bug reports via [Issues](https://github.com/PrevMedOrg/PrevMed/issues)
