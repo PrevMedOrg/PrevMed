@@ -496,9 +496,27 @@ def create_survey_interface(
             client_info = None
             if request is not None:
                 try:
+                    # Resolve real client IP behind reverse proxies (e.g. Caddy, Nginx)
+                    # X-Forwarded-For contains a comma-separated list of IPs; the first
+                    # entry is the original client, subsequent ones are proxies.
+                    # Falls back to X-Real-IP (single IP set by some proxies), then
+                    # to the direct TCP peer address as last resort.
+                    forwarded_for = request.headers.get("x-forwarded-for", "")
+                    if forwarded_for:
+                        # First entry is the original client IP
+                        real_ip = forwarded_for.split(",")[0].strip()
+                    else:
+                        real_ip = request.headers.get(
+                            "x-real-ip",
+                            # No proxy headers: fall back to direct TCP peer
+                            # including port so that once hashed, different
+                            # clients behind the same IP can still be told apart
+                            f"{request.client.host}:{request.client.port}",
+                        )
+
                     client_info = {
                         "user_agent": request.headers.get("user-agent", "unknown"),
-                        "ip_address": f"{request.client.host}:{request.client.port}",
+                        "ip_address": real_ip,
                         "headers_count": len(request.headers),
                         "query_params": dict(request.query_params),
                         "session_hash": request.session_hash,
