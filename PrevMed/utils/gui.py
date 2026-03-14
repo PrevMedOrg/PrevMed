@@ -334,7 +334,12 @@ def create_survey_interface(
                     # This keeps all answered questions visible
                     is_visible = is_condition_met
                     # Only the current question is interactive, previous ones are read-only
-                    is_interactive = (i == display_idx) and is_condition_met
+                    # Exception: after survey completion (display_idx past end), all visible
+                    # questions become interactive so the user can go back and edit answers
+                    survey_done = display_idx >= len(questions)
+                    is_interactive = (
+                        (i == display_idx) or survey_done
+                    ) and is_condition_met
                 else:
                     # Future questions: always hide and non-interactive
                     is_visible = False
@@ -846,6 +851,100 @@ def create_survey_interface(
             + [prev_btn, next_btn, current_question_idx],
             show_progress="hidden",
         )
+
+        # --- Rewind-on-edit: when user changes an already-answered question, ---
+        # --- rewind the survey to that point, reset skipped questions, hide results ---
+
+        def make_rewind_handler(changed_idx: int):
+            """
+            Factory that creates a per-widget .change() handler.
+
+            When the user edits question `changed_idx` and the survey has already
+            advanced past it (or is completed), the handler:
+            1. Rewinds current_idx to `changed_idx`
+            2. Resets to None any question after it that is now skipped (skip_if=True)
+            3. Hides results and re-shows navigation buttons
+
+            The handler is a no-op when the user is answering the current question
+            normally (changed_idx == current_idx and survey not yet completed).
+
+            Parameters
+            ----------
+            changed_idx : int
+                Index of the question whose widget this handler is bound to.
+
+            Returns
+            -------
+            Callable
+                Gradio event handler function.
+            """
+
+            def on_change(current_idx_val: int, survey_done: bool, *args):
+                # During normal forward flow, the current question's value changes
+                # as the user answers it — don't interfere with that.
+                if changed_idx >= current_idx_val and not survey_done:
+                    return {}
+
+                logger.info(
+                    f"Rewind triggered: question {changed_idx} ('{questions[changed_idx]['variable']}') "
+                    f"edited while current_idx={current_idx_val}, survey_done={survey_done}"
+                )
+
+                # Build context from current widget values
+                values = list(args)
+                context = {}
+                for i, q in enumerate(questions):
+                    context[q["variable"]] = values[i]
+
+                # Reset questions after the changed one that are now skipped.
+                # This avoids stale values leaking into scoring when re-advancing.
+                for i in range(changed_idx + 1, len(questions)):
+                    q = questions[i]
+                    if "skip_if" in q and evaluate_skip_if(q["skip_if"], context):
+                        default_val = q.get("widget_args", {}).get("default", None)
+                        values[i] = default_val
+                        context[q["variable"]] = default_val
+
+                # Rewind: set current question to the one that was edited
+                updates = update_question_display(changed_idx, *values)
+
+                # Apply reset values to widgets that were cleared above
+                for i in range(changed_idx + 1, len(questions)):
+                    q = questions[i]
+                    if "skip_if" in q and evaluate_skip_if(q["skip_if"], context):
+                        default_val = q.get("widget_args", {}).get("default", None)
+                        updates[widgets[q["variable"]]["widget"]] = gr.update(
+                            value=default_val, interactive=False
+                        )
+
+                # Hide results since answers have changed
+                updates[result_output] = gr.update(visible=False)
+                updates[pdf_download] = gr.update(visible=False)
+                updates[error_output] = gr.update(visible=False)
+                updates[survey_completed] = False
+
+                return updates
+
+            return on_change
+
+        # Full outputs list shared by all rewind handlers (same as go_next outputs)
+        rewind_outputs = (
+            all_row_outputs
+            + all_widget_outputs
+            + [prev_btn, next_btn, current_question_idx]
+            + [result_output, pdf_download, error_output, survey_completed]
+        )
+
+        logger.debug(
+            "Attachement des gestionnaires .change() pour le rembobinage du questionnaire"
+        )
+        for i, q in enumerate(questions):
+            widgets[q["variable"]]["widget"].change(
+                fn=make_rewind_handler(i),
+                inputs=[current_question_idx, survey_completed] + all_widget_inputs,
+                outputs=rewind_outputs,
+                show_progress="hidden",
+            )
 
         logger.debug("Attachement du gestionnaire de chargement de la démo")
         # Initialize display on load
