@@ -73,7 +73,7 @@ header: |
 
    - chez leurs apparentés directs : grands-parents, oncles et tantes, neveux et nièces, petits enfants, demi-frères et sœurs.
 
-   *ProbaLYNCH* permet d’estimer, à titre indicatif, votre probabilité d’être une personne porteuse de la fragilité génétique du syndrome de Lynch, à partir des cas de cancer colorectal, de cancer du corps de l’utérus ("endomètre") chez les femmes, ou des autres cancers du syndrome de Lynch. En répondant à chacune des questions dans l’ordre où elles vous arrivent, vous obtiendrez à la fin du questionnaire une estimation de votre probabilité avec des recommandations à discuter avec votre médecin généraliste (sauvegardez le pdf : rien n’est stocké !).
+   *ProbaLYNCH* permet d’estimer, à titre indicatif, votre probabilité d’être une personne porteuse de la fragilité génétique du syndrome de Lynch, à partir des cas de cancer colorectal, de cancer du corps de l’utérus ("endomètre") chez les femmes, ou des autres cancers du syndrome de Lynch. En répondant à chacune des questions dans l’ordre où elles vous arrivent, vous obtiendrez à la fin du questionnaire une estimation de votre probabilité avec des recommandations à discuter avec votre médecin généraliste (sauvegardez le PDF : rien n’est stocké !).
 
    En effet, il est important d’éviter de méconnaître un « [syndrome de Lynch](https://syndrome-de-lynch.fr) », dès lors qu’a été diagnostiqué, chez vous ou dans votre famille proche, un cancer du colon ou du rectum, mais aussi du corps de l’utérus ou de nombreux autres organes :
 
@@ -95,7 +95,7 @@ header: |
 
    <details><summary>Références</summary>
 
-   1. La seule manière de conserver les recommandations qui sont données est de sauvegarder le pdf transitoire.
+   1. La seule manière de conserver les recommandations qui sont données est de sauvegarder le PDF transitoire.
    2. Afin de permettre à tout un chacun d’évaluer sa probabilité d’être porteur du risque génétique, l’association de soutien à la génétique épidémiologique ASAGE (loi 1901 n°RNA W751217490, J.O. du 15 décembre 2012), met à disposition libre, gratuite et sans stockage d’aucune donnée personnelle, l’application *ProbaLYNCH* (sous licence [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0)) : le code informatique montrant l’absence de conservation des données est [accessible en ligne](https://github.com/PrevMedOrg/PrevMed) et tourne chez un hébergeur français. L’application initiale a été codée en langage informatique **R** en 2025, quand il était Dr Junior dans le Service GENOAP (Génétique-Oncogénétique-Adulte-Prévention) du CHU de Clermont-Ferrand, par le Dr Laury NICOLAS, actuellement Chef de Clinique de l’Université Antilles-Guyane - Assistant des Hôpitaux au CHU de la Guadeloupe. Le script **R** a été optimisé à GENOAP par Madame Anna SEROVA-ERARD, Conseillère en Génétique et Médecine Prédictive. Les illustrations ont été réalisées par Madame Anne SPECQ, Conseillère en Génétique et Médecine Prédictive, ancienne stagiaire de GENOAP. L'application ProbaLynch a été finalisée par oliCorp sur sa plateforme PrevMed, mise à disposition librement.
    3. Kastrinos et al, J Clin Oncol 35, 2165-2172 (2017). DOI: 10.1200/JCO.2016.69.6120. « Development and Validation of the PREMM5 Model for Comprehensive Risk Assessment of Lynch Syndrome ».
 
