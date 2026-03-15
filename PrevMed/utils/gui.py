@@ -941,10 +941,10 @@ def create_survey_interface(
             return on_change
 
         logger.debug(
-            "Attachement des gestionnaires .change() pour le rembobinage du questionnaire"
+            "Attachement des gestionnaires .input() pour le rembobinage du questionnaire"
         )
         for i, q in enumerate(questions):
-            widgets[q["variable"]]["widget"].change(
+            widgets[q["variable"]]["widget"].input(
                 fn=make_rewind_handler(i),
                 inputs=[current_question_idx, survey_completed] + all_widget_inputs,
                 outputs=rewind_outputs,
