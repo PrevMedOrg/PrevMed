@@ -1,3 +1,4 @@
+import hashlib
 import os
 import re
 import time
@@ -13,6 +14,7 @@ from PrevMed.utils.logic import (
     evaluate_valid_if,
 )
 from PrevMed.utils.pdf import generate_pdf_report
+from PrevMed.utils.settings import settings
 from PrevMed.utils.version import __VERSION__
 from PrevMed.utils.css import CSS
 from PrevMed.utils.js import JS_HEAD
@@ -521,8 +523,17 @@ def create_survey_interface(
                         "query_params": dict(request.query_params),
                         "session_hash": request.session_hash,
                     }
+                    # When not saving user data, log only a hash of the IP
+                    # (never the raw IP) to preserve privacy while still
+                    # allowing correlation in logs for debugging purposes.
+                    if settings.save_user_data:
+                        logged_ip = client_info["ip_address"]
+                    else:
+                        logged_ip = hashlib.sha256(
+                            client_info["ip_address"].encode("utf-8")
+                        ).hexdigest()[:12]
                     logger.info(
-                        f"Informations client capturées pour le hachage: IP={client_info['ip_address']}, session_hash={client_info['session_hash']}"
+                        f"Informations client capturées pour le hachage: IP={logged_ip}, session_hash={client_info['session_hash']}"
                     )
                 except Exception as e:
                     logger.warning(f"Échec de la capture des informations client: {e}")
