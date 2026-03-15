@@ -329,13 +329,9 @@ def create_survey_interface(
                     # Current and previous questions: show if condition is met
                     # This keeps all answered questions visible
                     is_visible = is_condition_met
-                    # Only the current question is interactive, previous ones are read-only
-                    # Exception: after survey completion (display_idx past end), all visible
-                    # questions become interactive so the user can go back and edit answers
-                    survey_done = display_idx >= len(questions)
-                    is_interactive = (
-                        (i == display_idx) or survey_done
-                    ) and is_condition_met
+                    # All visible questions are interactive so users can edit
+                    # previous answers at any time (triggers rewind via .input())
+                    is_interactive = is_condition_met
                 else:
                     # Future questions: always hide and non-interactive
                     is_visible = False
