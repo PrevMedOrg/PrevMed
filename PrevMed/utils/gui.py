@@ -851,6 +851,16 @@ def create_survey_interface(
         # --- Rewind-on-edit: when user changes an already-answered question, ---
         # --- rewind the survey to that point, reset skipped questions, hide results ---
 
+        # Full outputs list shared by all rewind handlers (same as go_next outputs).
+        # Defined before make_rewind_handler so the closure can reference it
+        # in the early-return no-op path.
+        rewind_outputs = (
+            all_row_outputs
+            + all_widget_outputs
+            + [prev_btn, next_btn, current_question_idx]
+            + [result_output, pdf_download, error_output, survey_completed]
+        )
+
         def make_rewind_handler(changed_idx: int):
             """
             Factory that creates a per-widget .change() handler.
@@ -879,7 +889,9 @@ def create_survey_interface(
                 # During normal forward flow, the current question's value changes
                 # as the user answers it — don't interfere with that.
                 if changed_idx >= current_idx_val and not survey_done:
-                    return {}
+                    # Must return updates for ALL outputs — an empty dict
+                    # causes Gradio to complain about mismatched output count.
+                    return {comp: gr.update() for comp in rewind_outputs}
 
                 logger.info(
                     f"Rewind triggered: question {changed_idx} ('{questions[changed_idx]['variable']}') "
@@ -927,14 +939,6 @@ def create_survey_interface(
                 return updates
 
             return on_change
-
-        # Full outputs list shared by all rewind handlers (same as go_next outputs)
-        rewind_outputs = (
-            all_row_outputs
-            + all_widget_outputs
-            + [prev_btn, next_btn, current_question_idx]
-            + [result_output, pdf_download, error_output, survey_completed]
-        )
 
         logger.debug(
             "Attachement des gestionnaires .change() pour le rembobinage du questionnaire"
