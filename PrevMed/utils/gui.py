@@ -914,8 +914,33 @@ def create_survey_interface(
                         context[q["variable"]] = default_val
                         skipped_indices.append(i)
 
-                # Rewind: set current question to the one that was edited
-                updates = update_question_display(changed_idx, *values)
+                # Auto-advance past questions that already have non-default
+                # answers so the user doesn't have to click "next" through
+                # questions whose values haven't changed after the rewind.
+                # This recursively skips forward until reaching a question
+                # that still holds its default (i.e. needs a new answer).
+                new_idx = changed_idx
+                for i in range(changed_idx + 1, len(questions)):
+                    q_ahead = questions[i]
+                    # Skipped questions don't block advancement
+                    if "skip_if" in q_ahead and evaluate_skip_if(
+                        q_ahead["skip_if"], context
+                    ):
+                        new_idx = i
+                        continue
+                    # Check whether the question already has a non-default value
+                    wa_ahead = q_ahead.get("widget_args", {})
+                    default_val_ahead = wa_ahead.get(
+                        "value", wa_ahead.get("default", None)
+                    )
+                    if values[i] != default_val_ahead and values[i] is not None:
+                        new_idx = i
+                    else:
+                        # First question still at its default — stop here
+                        break
+
+                # Rewind: display up to the furthest already-answered question
+                updates = update_question_display(new_idx, *values)
 
                 # Apply reset values to widgets that were cleared above
                 for i in skipped_indices:
