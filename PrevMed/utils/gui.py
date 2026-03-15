@@ -307,18 +307,14 @@ def create_survey_interface(
                 display_idx += 1
 
             # Build dictionary of component updates
-            # Scalability: Only update components in a narrow range around current index
-            # This avoids updating all previous questions, significantly improving performance
-            # We only need to update:
-            # - Previous question (to make it non-interactive)
-            # - Current question (to make it visible and interactive)
-            # - Next question (to ensure it stays hidden)
+            # Update all questions from the start to ensure consistent state,
+            # especially after a rewind where earlier questions may need their
+            # interactivity toggled (e.g. from interactive back to read-only)
             updates = {}
-
-            start_idx = max(0, display_idx - 1)
-            end_idx = len(questions)  # Always update to end to hide future questions
+            start_idx = 0
+            end_idx = len(questions)
             logger.debug(
-                f"Mise à jour des questions {start_idx} à {end_idx - 1} (plage de {end_idx - start_idx}) sur {len(questions)} au total"
+                f"Mise à jour des questions {start_idx} à {end_idx - 1} ({end_idx} au total)"
             )
 
             for i in range(start_idx, end_idx):
@@ -898,24 +894,29 @@ def create_survey_interface(
 
                 # Reset questions after the changed one that are now skipped.
                 # This avoids stale values leaking into scoring when re-advancing.
+                # Uses "value" key from widget_args (the YAML convention for initial
+                # values passed to Gradio), falling back to "default" then None.
+                skipped_indices = []
                 for i in range(changed_idx + 1, len(questions)):
                     q = questions[i]
                     if "skip_if" in q and evaluate_skip_if(q["skip_if"], context):
-                        default_val = q.get("widget_args", {}).get("default", None)
+                        wa = q.get("widget_args", {})
+                        default_val = wa.get("value", wa.get("default", None))
                         values[i] = default_val
                         context[q["variable"]] = default_val
+                        skipped_indices.append(i)
 
                 # Rewind: set current question to the one that was edited
                 updates = update_question_display(changed_idx, *values)
 
                 # Apply reset values to widgets that were cleared above
-                for i in range(changed_idx + 1, len(questions)):
+                for i in skipped_indices:
                     q = questions[i]
-                    if "skip_if" in q and evaluate_skip_if(q["skip_if"], context):
-                        default_val = q.get("widget_args", {}).get("default", None)
-                        updates[widgets[q["variable"]]["widget"]] = gr.update(
-                            value=default_val, interactive=False
-                        )
+                    wa = q.get("widget_args", {})
+                    default_val = wa.get("value", wa.get("default", None))
+                    updates[widgets[q["variable"]]["widget"]] = gr.update(
+                        value=default_val, interactive=False
+                    )
 
                 # Hide results since answers have changed
                 updates[result_output] = gr.update(visible=False)
