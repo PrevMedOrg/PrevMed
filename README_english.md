@@ -703,12 +703,18 @@ PrevMed/
 
 ## Logs
 
-Logs are automatically saved in `./logs/` with daily rotation and 365-day retention. The format includes:
+Logs are automatically saved in `./logs/` with daily rotation and 30-day retention. The format includes:
 
 - Timestamp with milliseconds
 - Log level
 - File, function and line
 - Message
+
+By default, file logs are at **INFO** level. To enable **DEBUG** level (more verbose), set the `PREVMED_LOG_LEVEL` environment variable:
+
+```bash
+PREVMED_LOG_LEVEL=DEBUG prevmed --survey-yaml <yaml> --scoring-script <script>
+```
 
 ## ProbaLYNCH Example
 

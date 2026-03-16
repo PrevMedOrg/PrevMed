@@ -1,5 +1,6 @@
 from loguru import logger
 from pathlib import Path
+import os
 import sys
 
 # Remove default handler to configure our own
@@ -17,12 +18,16 @@ _console_handler_id = logger.add(
 LOG_DIR = Path("./logs")
 LOG_DIR.mkdir(exist_ok=True)
 
-# Add file handler at INFO level
+# File log level: defaults to INFO, can be set to DEBUG via PREVMED_LOG_LEVEL env var
+_file_log_level = os.environ.get("PREVMED_LOG_LEVEL", "INFO").upper()
+if _file_log_level not in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
+    _file_log_level = "INFO"
+
 _file_handler_id = logger.add(
     f"{LOG_DIR}/survey_{{time:YYYY-MM-DD}}.log",
     rotation="00:00",  # Rotate at midnight
     retention="30 days",  # Keep 30 days of logs
-    level="INFO",
+    level=_file_log_level,
     format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}",
 )
 
