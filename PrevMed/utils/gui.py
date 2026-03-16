@@ -655,6 +655,9 @@ def create_survey_interface(
                             shm_path = f"/dev/shm/{pdf_filename}"
                             with open(shm_path, "wb") as f:
                                 f.write(pdf_bytes)
+                            # Restrict to owner-read only: /dev/shm is world-accessible
+                            # so chmod 600 prevents other users/processes from reading the PDF
+                            os.chmod(shm_path, 0o600)
                             pdf_path = shm_path
                             logger.info(
                                 f"Rapport PDF généré en RAM (/dev/shm): {pdf_path} (durée {pdf_duration:.3f}s)"

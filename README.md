@@ -190,7 +190,7 @@ PrevMed supporte plusieurs options pour personnaliser le comportement de l'appli
 
 #### Sauvegarde des données utilisateur
 
-Par défaut, **aucune donnée utilisateur n'est sauvegardée**. Les rapports PDF générés sont créés **en mémoire** (en utilisant BytesIO) uniquement pour le téléchargement par le patient, sans logging des réponses ou des résultats - aucun fichier n'est jamais écrit sur disque.
+Par défaut, **aucune donnée utilisateur n'est sauvegardée**. Les rapports PDF sont générés en mémoire et brièvement écrits dans `/dev/shm` (RAM, chmod 600) uniquement pour le téléchargement par le patient — aucun fichier n'est jamais écrit sur disque, aucune réponse ni résultat n'est loggé.
 
 Pour **sauvegarder les données utilisateur de manière permanente** (dans le répertoire `survey_data/`), utilisez l'option `--save-user-data` :
 
@@ -206,7 +206,7 @@ prevmed --survey-yaml examples/ProbaLYNCH/ProbaLYNCH.yaml \
 - Rapports PDF stockés de manière permanente dans `survey_data/`
 
 **Sans cette option (comportement par défaut) :**
-- Les PDFs sont générés **en mémoire uniquement** (en utilisant BytesIO) - aucun fichier écrit sur disque
+- Les PDFs sont générés en mémoire et brièvement écrits dans `/dev/shm` (RAM, chmod 600) pour le téléchargement — **aucun fichier écrit sur disque**
 - Aucune donnée n'est loggée dans les fichiers CSV
 - Aucun fichier JSON n'est sauvegardé
 - Respect maximal de la vie privée des patients - empreinte disque nulle
@@ -586,7 +586,7 @@ Les rapports PDF sont générés automatiquement à la fin du questionnaire et i
 ### Génération de PDFs en mémoire
 
 **Approche de stockage des PDFs :**
-- **Par défaut** : les PDFs sont générés entièrement **en mémoire** en utilisant BytesIO (aucun fichier écrit sur disque)
+- **Par défaut** : les PDFs sont générés en mémoire et servis via un fichier temporaire dans `/dev/shm` (tmpfs RAM — **aucune écriture sur disque**)
 - **Avec `--save-user-data`** : les PDFs sont sauvegardés de manière permanente dans `survey_data/` en plus des données JSON
 
 **Fonctionnement de la génération en mémoire :**
@@ -594,20 +594,20 @@ Les rapports PDF sont générés automatiquement à la fin du questionnaire et i
 Lorsque `--save-user-data` n'est pas activé (comportement par défaut) :
 
 1. Le PDF est généré directement en mémoire en utilisant le buffer BytesIO de Python
-2. Les octets du PDF sont transférés directement au navigateur du patient pour téléchargement
-3. **Aucun fichier n'est jamais écrit sur disque** - protection maximale de la vie privée
-4. La mémoire est automatiquement libérée après la fin du téléchargement
-5. Aucun nettoyage nécessaire - pas de fichiers temporaires à gérer
+2. Les octets sont écrits dans un fichier temporaire dans `/dev/shm` (système de fichiers RAM de Linux — ne touche jamais le disque), avec les permissions `600` (lecture réservée au propriétaire) pour empêcher d'autres utilisateurs d'y accéder
+3. Le DownloadButton de Gradio sert le fichier au navigateur du patient (il requiert un chemin de fichier, pas un objet BytesIO)
+4. Le fichier temporaire est automatiquement supprimé après un court délai une fois la fenêtre de téléchargement passée
+5. **Aucun fichier n'est jamais écrit sur disque** - protection maximale de la vie privée
 
 **Exemple de workflow :**
 
 1. Patient complète le questionnaire à 14h00
 2. PDF généré en mémoire (BytesIO)
-3. Patient télécharge le PDF directement depuis la mémoire
-4. La mémoire est libérée automatiquement après le téléchargement
-5. **Aucune trace ne reste sur le serveur** - confidentialité totale
+3. PDF écrit dans `/dev/shm` (RAM uniquement, chmod 600) pour être servi par Gradio
+4. Patient télécharge le PDF
+5. Fichier temporaire supprimé de la RAM — **aucune trace ne reste sur le disque**
 
-Cette approche assure une **empreinte disque nulle** et une **confidentialité maximale des patients** en éliminant toute gestion de fichiers temporaires.
+Cette approche assure une **empreinte disque nulle** et une **confidentialité maximale des patients** : les données ne résident qu'en RAM.
 
 ## Stockage des données structurées (si activé)
 

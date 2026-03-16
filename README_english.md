@@ -157,7 +157,7 @@ sudo docker compose up --build -d
 
 **Volume management:**
 - The `logs/` and `survey_data/` folders are **mounted as volumes** to persist data between restarts
-- PDFs are generated **in-memory** by default (no disk files), ensuring maximum privacy
+- PDFs are generated in-memory and served via `/dev/shm` (RAM tmpfs, no disk files) by default, ensuring maximum privacy
 
 **Docker container security:**
 - The container runs as the unprivileged `nobody` user (no root)
@@ -206,7 +206,7 @@ prevmed --survey-yaml examples/ProbaLYNCH/ProbaLYNCH.yaml \
 - PDF reports stored permanently in `survey_data/`
 
 **Without this option (default behavior):**
-- PDFs are generated **in-memory only** (using BytesIO) - no files written to disk
+- PDFs are generated in-memory and briefly written to `/dev/shm` (RAM, chmod 600) for download — **no files written to disk**
 - No data is logged in CSV files
 - No JSON files are saved
 - Maximum respect for patient privacy - zero disk footprint
@@ -586,7 +586,7 @@ PDF reports are automatically generated at the end of the survey and include:
 ### In-memory PDF generation
 
 **PDF storage approach:**
-- **By default**: PDFs are generated entirely **in-memory** using BytesIO (no files written to disk)
+- **By default**: PDFs are generated in-memory and served via a short-lived temp file in `/dev/shm` (RAM-based tmpfs — **no disk writes**)
 - **With `--save-user-data`**: PDFs are saved permanently in `survey_data/` alongside JSON data
 
 **How in-memory generation works:**
@@ -594,20 +594,20 @@ PDF reports are automatically generated at the end of the survey and include:
 When `--save-user-data` is not enabled (default behavior):
 
 1. PDF is generated directly in memory using Python's BytesIO buffer
-2. PDF bytes are transferred directly to the patient's browser for download
-3. **No files are ever written to disk** - maximum privacy protection
-4. Memory is automatically freed after download completes
-5. No cleanup needed - no temporary files to manage
+2. Bytes are written to a temporary file in `/dev/shm` (Linux RAM filesystem — never touches disk), with permissions `600` (owner-read only) to prevent other users from accessing it
+3. Gradio's DownloadButton serves the file to the patient's browser (it requires a file path, not a BytesIO object)
+4. The temp file is automatically deleted after a short delay once the download window has passed
+5. **No files are ever written to disk** - maximum privacy protection
 
 **Example workflow:**
 
 1. Patient completes survey at 2:00 PM
 2. PDF is generated in memory (BytesIO)
-3. Patient downloads PDF directly from memory
-4. Memory is freed automatically after download
-5. **No trace remains on the server** - complete privacy
+3. PDF is written to `/dev/shm` (RAM only, chmod 600) for Gradio to serve
+4. Patient downloads the PDF
+5. Temp file is deleted from RAM — **no trace remains on disk**
 
-This approach ensures **zero disk footprint** and **maximum patient privacy** by eliminating all temporary file management.
+This approach ensures **zero disk footprint** and **maximum patient privacy**: data only ever lives in RAM.
 
 ## Structured Data Storage (if enabled)
 
