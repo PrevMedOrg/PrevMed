@@ -207,6 +207,10 @@ def create_survey_interface(
         current_question_idx = gr.State(0)
         # State to track if survey was just completed (for analytics)
         survey_completed = gr.State(False)
+        # Tracks which question indices the user has visited/answered,
+        # so the rewind auto-advance can distinguish "user chose the default"
+        # from "user hasn't seen this question yet"
+        visited_questions = gr.State(set())
 
         # Optional markdown header displayed just before the questions
         if config.get("questions_header"):
@@ -397,7 +401,7 @@ def create_survey_interface(
 
             return updates
 
-        def go_next(request: gr.Request, current_idx, *args):
+        def go_next(request: gr.Request, current_idx, visited, *args):
             """
             Navigue vers la question suivante, en sautant celles dont les conditions ne sont pas remplies.
 
@@ -447,6 +451,7 @@ def create_survey_interface(
 
                     # Return updates that don't change question
                     updates = update_question_display(current_idx, *args)
+                    updates[visited_questions] = visited
                     return updates
 
             # Check if answer meets validation criteria (valid_if condition)
@@ -468,6 +473,7 @@ def create_survey_interface(
                     )
                     gr.Warning(f"Erreur lors de la validation: {str(e)}")
                     updates = update_question_display(current_idx, *args)
+                    updates[visited_questions] = visited
                     return updates
 
                 if not is_valid:
@@ -487,6 +493,7 @@ def create_survey_interface(
 
                     # Return updates that don't change question
                     updates = update_question_display(current_idx, *args)
+                    updates[visited_questions] = visited
                     return updates
 
             # Capture client info from request for privacy-preserving hash
@@ -565,6 +572,10 @@ def create_survey_interface(
                     exc_info=True,
                 )
                 raise
+
+            # Mark both the current question and the destination as visited
+            # so the rewind auto-advance knows the user has seen them
+            visited = visited | {current_idx, new_idx}
 
             logger.debug(f"Navigation de l'index {current_idx} vers {new_idx}")
 
@@ -664,6 +675,7 @@ def create_survey_interface(
                     updates[error_output] = gr.update(visible=False)
                     # Signal that survey was just completed for analytics
                     updates[survey_completed] = True
+                    updates[visited_questions] = visited
 
                     return updates
                 except Exception as e:
@@ -673,6 +685,7 @@ def create_survey_interface(
                     updates[pdf_download] = gr.update(visible=False)
                     updates[error_output] = gr.update(value=str(e), visible=True)
                     updates[survey_completed] = False
+                    updates[visited_questions] = visited
                     return updates
             else:
                 # Not at end yet, hide result components
@@ -681,6 +694,7 @@ def create_survey_interface(
                 updates[error_output] = gr.update(visible=False)
                 # Reset completion state
                 updates[survey_completed] = False
+                updates[visited_questions] = visited
                 logger.debug(
                     f"=== go_next FIN === Retour de {len(updates)} mises à jour de composants (pas encore à la fin)"
                 )
@@ -783,11 +797,12 @@ def create_survey_interface(
         logger.debug("Attachement du gestionnaire de clic du bouton Suivant")
         next_btn.click(
             fn=go_next,
-            inputs=[current_question_idx] + all_widget_inputs,
+            inputs=[current_question_idx, visited_questions] + all_widget_inputs,
             outputs=all_row_outputs
             + all_widget_outputs
             + [prev_btn, next_btn, current_question_idx]
-            + [result_output, pdf_download, error_output, survey_completed],
+            + [result_output, pdf_download, error_output, survey_completed]
+            + [visited_questions],
             show_progress="hidden",
         ).then(
             fn=None,
@@ -855,6 +870,7 @@ def create_survey_interface(
             + all_widget_outputs
             + [prev_btn, next_btn, current_question_idx]
             + [result_output, pdf_download, error_output, survey_completed]
+            + [visited_questions]
         )
 
         def make_rewind_handler(changed_idx: int):
@@ -881,7 +897,7 @@ def create_survey_interface(
                 Gradio event handler function.
             """
 
-            def on_change(current_idx_val: int, survey_done: bool, *args):
+            def on_change(current_idx_val: int, survey_done: bool, visited: set, *args):
                 # During normal forward flow, the current question's value changes
                 # as the user answers it — don't interfere with that.
                 if changed_idx >= current_idx_val and not survey_done:
@@ -914,11 +930,10 @@ def create_survey_interface(
                         context[q["variable"]] = default_val
                         skipped_indices.append(i)
 
-                # Auto-advance past questions that already have non-default
-                # answers so the user doesn't have to click "next" through
-                # questions whose values haven't changed after the rewind.
-                # This recursively skips forward until reaching a question
-                # that still holds its default (i.e. needs a new answer).
+                # Auto-advance past questions the user has already visited
+                # so they don't have to click "next" through unchanged answers.
+                # Uses the visited set (populated by go_next) instead of comparing
+                # against defaults, which fails when the user's answer equals the default.
                 new_idx = changed_idx
                 for i in range(changed_idx + 1, len(questions)):
                     q_ahead = questions[i]
@@ -928,16 +943,16 @@ def create_survey_interface(
                     ):
                         new_idx = i
                         continue
-                    # Check whether the question already has a non-default value
-                    wa_ahead = q_ahead.get("widget_args", {})
-                    default_val_ahead = wa_ahead.get(
-                        "value", wa_ahead.get("default", None)
-                    )
-                    if values[i] != default_val_ahead and values[i] is not None:
+                    # Advance past questions the user has previously visited
+                    if i in visited:
                         new_idx = i
                     else:
-                        # First question still at its default — stop here
+                        # First never-visited question — stop here
                         break
+
+                # Trim visited set: questions after the rewind target are no longer
+                # considered visited, so re-advancing will stop at the right place
+                visited = {j for j in visited if j <= new_idx}
 
                 # Rewind: display up to the furthest already-answered question
                 updates = update_question_display(new_idx, *values)
@@ -956,6 +971,7 @@ def create_survey_interface(
                 updates[pdf_download] = gr.update(visible=False)
                 updates[error_output] = gr.update(visible=False)
                 updates[survey_completed] = False
+                updates[visited_questions] = visited
 
                 return updates
 
@@ -967,7 +983,7 @@ def create_survey_interface(
         for i, q in enumerate(questions):
             widgets[q["variable"]]["widget"].input(
                 fn=make_rewind_handler(i),
-                inputs=[current_question_idx, survey_completed] + all_widget_inputs,
+                inputs=[current_question_idx, survey_completed, visited_questions] + all_widget_inputs,
                 outputs=rewind_outputs,
                 show_progress="hidden",
             )
