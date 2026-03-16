@@ -25,9 +25,11 @@ services:
     volumes:
       # Mount examples directory for easy access to YAML and scoring scripts
       - ../examples:/app/examples:ro
-      # Persist logs between container restarts
-      # Note: Create this directory on the host with proper permissions before running
-      - ../logs:/app/logs:rw
+      # Persist logs between container restarts — disabled by default.
+      # Enable only if you need to inspect logs outside the container.
+      # Note: Create this directory on the host with proper permissions before running.
+      # Warning: log files may contain operational data; handle with care under GDPR.
+      # - ../logs:/app/logs:rw
       # Persist survey data if --save-user-data is enabled
       # Note: Create this directory on the host with proper permissions before running
       - ../survey_data:/app/survey_data
