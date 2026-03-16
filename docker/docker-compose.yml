@@ -19,6 +19,7 @@ services:
     # tmpfs mounts for directories that need to be writable (R/Python temp files)
     tmpfs:
       - /tmp:size=100M,mode=1777
+      - /app/logs:size=100M,mode=1777
     ports:
       # Map container port 7860 to host port 7860
       - "7860:7860"
