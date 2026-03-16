@@ -162,8 +162,12 @@ def cli_launcher():
     parser.add_argument(
         "--terms-md",
         type=str,
-        required=False,
-        help="Chemin vers un fichier Markdown contenant les mentions légales à afficher en bas de page dans un élément <details> repliable",
+        required=True,
+        # Mandatory for GDPR compliance: users must be shown the legal notice
+        # (data controller identity, processing purposes, retention period, etc.)
+        # before submitting any health data. The app crashes at startup if missing
+        # rather than silently running without legal cover.
+        help="(OBLIGATOIRE) Chemin vers un fichier Markdown contenant les mentions légales RGPD (responsable du traitement, finalités, durée de conservation…) à afficher en bas de page. L'application refuse de démarrer sans ce fichier.",
     )
 
     args, unknown_args = parser.parse_known_args()
@@ -224,15 +228,15 @@ def cli_launcher():
                 f"Échec de l'import de rpy2. Assurez-vous qu'il est installé correctement. L'erreur était: '{e}'"
             ) from e
 
-    # Read legal terms markdown file if provided
-    terms_md_content = None
-    if args.terms_md:
-        terms_md_path = Path(args.terms_md)
-        if not terms_md_path.exists():
-            logger.error(f"Fichier de mentions légales introuvable: {args.terms_md}")
-            raise SystemExit(f"Erreur: Fichier introuvable: {args.terms_md}")
-        terms_md_content = terms_md_path.read_text(encoding="utf-8")
-        logger.info(f"Mentions légales chargées depuis: {args.terms_md}")
+    # Load the mandatory GDPR legal terms file.
+    # --terms-md is required; argparse already rejects missing values.
+    # We still check file existence here to give a clear error message.
+    terms_md_path = Path(args.terms_md)
+    if not terms_md_path.exists():
+        logger.error(f"Fichier de mentions légales introuvable: {args.terms_md}")
+        raise SystemExit(f"Erreur: Fichier introuvable: {args.terms_md}")
+    terms_md_content = terms_md_path.read_text(encoding="utf-8")
+    logger.info(f"Mentions légales chargées depuis: {args.terms_md}")
 
     demo = create_survey_interface(
         yaml_path=survey_yaml_path,

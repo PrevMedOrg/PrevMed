@@ -39,9 +39,12 @@ services:
       - PYTHONUNBUFFERED=1
       # Uncomment to set container timezone (default is UTC)
       # - TZ=Europe/Paris
+    # --terms-md is mandatory (GDPR Art. 13/14): the app refuses to start without it.
+    # Replace examples/terms_example.md with your actual legal notices file.
     command: >
       --survey-yaml examples/ProbaLYNCH/ProbaLYNCH.yaml
       --scoring-script examples/ProbaLYNCH/ProbaLYNCH.R
+      --terms-md examples/terms_example.md
       --port 7860
     restart: unless-stopped
     

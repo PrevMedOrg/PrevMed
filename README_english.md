@@ -225,7 +225,10 @@ prevmed --survey-yaml <yaml> --scoring-script <script> --debug
 # Specify the actual URL where the questionnaire is hosted (will appear in PDFs)
 prevmed --survey-yaml <yaml> --scoring-script <script> --actual-url "https://survey.hospital.com/probalynch"
 
-# Display legal notices at the bottom of the page (collapsible <details> element)
+# Display GDPR legal notices at the bottom of the page (collapsible <details> element)
+# ⚠️  MANDATORY: the application refuses to start without this file.
+# The file must contain at minimum: data controller identity, purposes,
+# retention period, and data subject rights (GDPR art. 13/14).
 prevmed --survey-yaml <yaml> --scoring-script <script> --terms-md legal_notices.md
 ```
 

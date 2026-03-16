@@ -225,7 +225,10 @@ prevmed --survey-yaml <yaml> --scoring-script <script> --debug
 # Spécifier l'URL réelle où le questionnaire est hébergé (apparaîtra dans les PDFs)
 prevmed --survey-yaml <yaml> --scoring-script <script> --actual-url "https://survey.hopital.fr/probalynch"
 
-# Afficher des mentions légales en bas de page (élément <details> repliable)
+# Afficher les mentions légales RGPD en bas de page (élément <details> repliable)
+# ⚠️  OBLIGATOIRE : l'application refuse de démarrer sans ce fichier.
+# Ce fichier doit contenir au minimum : responsable du traitement, finalités,
+# durée de conservation et droits des personnes concernées (RGPD art. 13/14).
 prevmed --survey-yaml <yaml> --scoring-script <script> --terms-md mentions_legales.md
 ```
 
