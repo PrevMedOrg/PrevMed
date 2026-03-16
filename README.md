@@ -65,6 +65,7 @@ PrevMed permet de créer des questionnaires cliniques interactifs à partir de f
 - 📄 Génération automatique de rapports PDF
 - 📝 Logging détaillé avec loguru
 - 🎯 Type hints et documentation NumPy style
+- 🔒 Polices système uniquement — aucune requête vers Google Fonts ou tout autre serveur externe (respect de la vie privée)
 
 ## Installation
 

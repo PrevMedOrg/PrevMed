@@ -178,6 +178,12 @@ def create_survey_interface(
             primary_hue="green",
             secondary_hue="emerald",
             neutral_hue="gray",
+            # Use system fonts only — no external font fetching (privacy-friendly).
+            # "system-ui" resolves to the OS default UI font (Segoe UI on Windows,
+            # San Francisco on macOS/iOS, Roboto on Android/Chrome OS, etc.).
+            # The fallback chain covers every mainstream platform without any network request.
+            font=["system-ui", "-apple-system", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif"],
+            font_mono=["ui-monospace", "SFMono-Regular", "Consolas", "Liberation Mono", "Courier New", "monospace"],
         ),
         analytics_enabled=False,
         head=analytics_head + "\n\n" + JS_HEAD,

@@ -65,6 +65,7 @@ PrevMed allows creating interactive clinical questionnaires from YAML configurat
 - 📄 Automatic PDF report generation
 - 📝 Detailed logging with loguru
 - 🎯 Type hints and NumPy style documentation
+- 🔒 System fonts only — no requests to Google Fonts or any external server (privacy-friendly)
 
 ## Installation
 
