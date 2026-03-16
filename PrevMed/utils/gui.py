@@ -527,18 +527,14 @@ def create_survey_interface(
                         "query_params": dict(request.query_params),
                         "session_hash": request.session_hash,
                     }
-                    # When not saving user data, log only a hash of the IP
-                    # (never the raw IP) to preserve privacy while still
-                    # allowing correlation in logs for debugging purposes.
+                    # Log the actual IP only when save_user_data is enabled
+                    # (i.e. the operator explicitly opted into data collection).
+                    # When not saving data, we do NOT log IP or session hash at all —
+                    # not even hashed — to avoid any risk of tracking under GDPR.
                     if settings.save_user_data:
-                        logged_ip = client_info["ip_address"]
-                    else:
-                        logged_ip = hashlib.sha256(
-                            client_info["ip_address"].encode("utf-8")
-                        ).hexdigest()[:12]
-                    logger.info(
-                        f"Informations client capturées pour le hachage: IP={logged_ip}, session_hash={client_info['session_hash']}"
-                    )
+                        logger.info(
+                            f"Informations client capturées pour le hachage: IP={client_info['ip_address']}, session_hash={client_info['session_hash']}"
+                        )
                 except Exception as e:
                     logger.warning(f"Échec de la capture des informations client: {e}")
                     client_info = None
