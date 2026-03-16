@@ -190,7 +190,7 @@ PrevMed supports several options to customize application behavior:
 
 #### User data saving
 
-By default, **no user data is saved**. Generated PDF reports are created as **temporary files** only for patient download, without logging answers or results.
+By default, **no user data is saved**. PDF reports are generated in-memory and briefly written to `/dev/shm` (RAM, chmod 600) only for patient download — **no files are ever written to disk**, no answers or results are logged.
 
 To **save user data permanently** (in the `survey_data/` directory), use the `--save-user-data` option:
 
@@ -623,9 +623,11 @@ With `--save-user-data`, each submission is saved as compressed JSON (`.json.gz`
 - Unix timestamp
 - Client hashes (for anonymous duplicate detection)
 
-**File name format:** `{timestamp}_{reference_code}.json.gz`
+**File name format:** `{timestamp}_{reference_code}_{unique_id}.json.gz`
 
-**Example:** `1729500000_A2B-3C4.json.gz`
+**Example:** `1729500000_A2B-3C4_a1b2c3d4.json.gz`
+
+**Note:** The `{unique_id}` is a UUID fragment (first 8 characters) that guarantees absolute uniqueness even in case of timestamp collision.
 
 ### CSV logs (if `--save-user-data` enabled)
 
@@ -655,7 +657,7 @@ With `--save-user-data`, a **centralized CSV file** records all submissions for 
 
 **Error handling:**
 - In case of lock timeout (very high load), data is saved in a fallback file
-- Format: `survey_submissions_fallback_{timestamp}_{random}.csv`
+- Format: `survey_submissions_fallback_{timestamp}_{uuid}.csv` (where `{uuid}` is an 8-character UUID fragment)
 - **Guarantee:** no data loss even under extreme load
 
 **Duplicate detection:**
