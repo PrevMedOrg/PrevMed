@@ -502,11 +502,12 @@ def create_survey_interface(
                     updates[visited_questions] = visited
                     return updates
 
-            # Capture client info from request for privacy-preserving hash
-            # This will be hashed with the patient reference code as salt
-            # Gradio automatically injects the request parameter before other inputs
+            # Capture client info from request for privacy-preserving hash.
+            # Only collected when --save-user-data is ON so that no personal
+            # data (IP, user-agent, etc.) is processed at all in default mode,
+            # satisfying GDPR Art. 5(1)(c) data minimisation principle.
             client_info = None
-            if request is not None:
+            if settings.save_user_data and request is not None:
                 try:
                     # Resolve real client IP behind reverse proxies (e.g. Caddy, Nginx)
                     # X-Forwarded-For contains a comma-separated list of IPs; the first
@@ -533,20 +534,21 @@ def create_survey_interface(
                         "query_params": dict(request.query_params),
                         "session_hash": request.session_hash,
                     }
-                    # Log the actual IP only when save_user_data is enabled
-                    # (i.e. the operator explicitly opted into data collection).
-                    # When not saving data, we do NOT log IP or session hash at all —
-                    # not even hashed — to avoid any risk of tracking under GDPR.
-                    if settings.save_user_data:
-                        logger.info(
-                            f"Informations client capturées pour le hachage: IP={client_info['ip_address']}, session_hash={client_info['session_hash']}"
-                        )
+                    # NOTE: the raw IP is intentionally NOT logged to disk.
+                    # The resolution logic above (X-Forwarded-For → X-Real-IP → TCP peer)
+                    # is kept as documentation of how to obtain the real client IP behind
+                    # reverse proxies, but writing it to the log file would create a
+                    # 30-day store of personal data (GDPR Art. 4(1), CJEU Breyer C-582/14)
+                    # that the current legal notice does not disclose.
+                    # If you ever need to log the IP (e.g. for abuse detection),
+                    # update the privacy notice and uncomment the line below:
+                    # logger.info(f"Client info captured for hashing: IP={client_info['ip_address']}, session_hash={client_info['session_hash']}")
                 except Exception as e:
                     logger.warning(f"Échec de la capture des informations client: {e}")
                     client_info = None
-            else:
-                logger.warning(
-                    "L'objet Request est None - le client_hash ne sera pas généré"
+            elif not settings.save_user_data:
+                logger.debug(
+                    "Client info collection skipped (--save-user-data is OFF) — GDPR data minimisation"
                 )
 
             # Log argument metadata (anonymity: do not log actual values)
