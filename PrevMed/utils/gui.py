@@ -930,12 +930,31 @@ def create_survey_interface(
                         context[q["variable"]] = default_val
                         skipped_indices.append(i)
 
+                # If the changed question has a valid_if condition that now fails,
+                # do NOT auto-advance: stay at changed_idx so the user must fix
+                # the answer and click "Next" (which enforces valid_if).
+                changed_q = questions[changed_idx]
+                skip_auto_advance = False
+                if "valid_if" in changed_q:
+                    try:
+                        skip_auto_advance = not evaluate_valid_if(
+                            changed_q["valid_if"], context
+                        )
+                    except Exception:
+                        skip_auto_advance = True
+
                 # Auto-advance past questions the user has already visited
                 # so they don't have to click "next" through unchanged answers.
                 # Uses the visited set (populated by go_next) instead of comparing
                 # against defaults, which fails when the user's answer equals the default.
                 new_idx = changed_idx
+                if skip_auto_advance:
+                    logger.debug(
+                        f"Rewind: skipping auto-advance because valid_if failed for question {changed_idx}"
+                    )
                 for i in range(changed_idx + 1, len(questions)):
+                    if skip_auto_advance:
+                        break
                     q_ahead = questions[i]
                     # Skipped questions don't block advancement
                     if "skip_if" in q_ahead and evaluate_skip_if(
