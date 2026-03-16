@@ -17,12 +17,12 @@ _console_handler_id = logger.add(
 LOG_DIR = Path("./logs")
 LOG_DIR.mkdir(exist_ok=True)
 
-# Add file handler at DEBUG level (always DEBUG)
+# Add file handler at INFO level
 _file_handler_id = logger.add(
     f"{LOG_DIR}/survey_{{time:YYYY-MM-DD}}.log",
     rotation="00:00",  # Rotate at midnight
-    retention="365 days",  # Keep 365 days of logs
-    level="DEBUG",
+    retention="30 days",  # Keep 30 days of logs
+    level="INFO",
     format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{function}:{line} - {message}",
 )
 
