@@ -15,6 +15,11 @@ show_survey_title: false
 # Optional: markdown content for the greetings landing page.
 # When set, a greetings page is shown first on route / with this content
 # and the legal terms at the bottom. The user clicks "Start" to reach the survey.
+# Optional: route path for the survey page when greetings_md is set.
+# The greetings page is served at /, and the survey at this route.
+# Default: /survey
+survey_route: /surveys/lynch_example
+
 greetings_md: |
   # Bienvenue sur ProbaLYNCH
 
