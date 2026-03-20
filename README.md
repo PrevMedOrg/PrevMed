@@ -370,8 +370,9 @@ greetings_md: |
 
 # Optionnel: chemin de la route pour la page du questionnaire quand
 # greetings_md est défini. La page d'accueil est servie sur /,
-# le questionnaire sur cette route. Par défaut: /survey
-survey_route: /surveys/mon_questionnaire
+# le questionnaire sur cette route. Par défaut: survey
+# IMPORTANT: ne pas mettre de / dans la valeur (ex: "lynch", pas "/lynch")
+survey_route: mon_questionnaire
 
 # Optionnel: texte d'en-tête affiché en haut du questionnaire (format Markdown, avec support HTML)
 header: |

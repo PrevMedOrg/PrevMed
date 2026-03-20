@@ -18,7 +18,7 @@ show_survey_title: false
 # Optional: route path for the survey page when greetings_md is set.
 # The greetings page is served at /, and the survey at this route.
 # Default: /survey
-survey_route: /surveys/lynch_example
+survey_route: lynch
 
 greetings_md: |
   # Bienvenue sur ProbaLYNCH

@@ -206,7 +206,7 @@ def create_survey_interface(
         # When greetings_md is in the YAML, the root route / shows a landing
         # page and the survey lives on a separate route via Blocks.route().
         has_greetings = bool(config.get("greetings_md"))
-        survey_route = config.get("survey_route", "/survey")
+        survey_route = config.get("survey_route", "survey")
 
         if has_greetings:
             create_greetings_section(

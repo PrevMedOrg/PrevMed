@@ -17,7 +17,7 @@ from loguru import logger
 
 def create_greetings_section(
     greetings_md: str,
-    survey_route: str = "/survey",
+    survey_route: str = "survey",
     terms_md_content: Optional[str] = None,
     legal_summary: str = "LEGAL",
 ) -> gr.Column:
@@ -33,7 +33,7 @@ def create_greetings_section(
         Markdown content for the greetings page, taken from the YAML
         ``greetings_md`` field.
     survey_route : str, optional
-        Route path for the survey page (default: ``"/survey"``).
+        Route path for the survey page (default: ``"survey"``).
         The start button links to this route.
     terms_md_content : str, optional
         GDPR legal terms markdown loaded from ``--terms-md``.
