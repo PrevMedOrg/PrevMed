@@ -12,6 +12,18 @@ PrevMed_version: 1.1.0
 # Optional: display survey_name as a title at the top of the page (default: true)
 show_survey_title: false
 
+# Optional: markdown content for the greetings landing page.
+# When set, a greetings page is shown first on route / with this content
+# and the legal terms at the bottom. The user clicks "Start" to reach the survey.
+greetings_md: |
+  # Bienvenue sur ProbaLYNCH
+
+  **ProbaLYNCH** vous permet d'estimer, à titre indicatif, votre probabilité d'être porteur de la fragilité génétique du **[syndrome de Lynch](https://syndrome-de-lynch.fr)**.
+
+  Le questionnaire dure **2 à 6 minutes**. Aucune donnée personnelle n'est stockée : le résultat est un PDF transitoire que vous pouvez sauvegarder.
+
+  Cliquez sur le bouton ci-dessous pour commencer.
+
 # Optional header text - rendered as markdown at top of survey page
 header: |
    <h1 style="text-align: center;">Avez-vous eu un cas de cancer colorectal dans votre famille ?</h1>
