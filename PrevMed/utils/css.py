@@ -44,4 +44,9 @@ footer {
 .force_justify_text, .force_justify_text * {
     text-align: justify !important;
 }
+
+/* Hide the Gradio multipage navigation bar */
+.nav-holder {
+    display: none !important;
+}
 """
