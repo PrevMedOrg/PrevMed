@@ -368,6 +368,11 @@ greetings_md: |
   # Bienvenue
   Description de la page d'accueil...
 
+# Optionnel: chemin de la route pour la page du questionnaire quand
+# greetings_md est défini. La page d'accueil est servie sur /,
+# le questionnaire sur cette route. Par défaut: /survey
+survey_route: /surveys/mon_questionnaire
+
 # Optionnel: texte d'en-tête affiché en haut du questionnaire (format Markdown, avec support HTML)
 header: |
   ## À propos de ce questionnaire

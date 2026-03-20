@@ -367,6 +367,11 @@ greetings_md: |
   # Welcome
   Landing page description...
 
+# Optional: route path for the survey page when greetings_md is set.
+# The greetings page is served at /, and the survey at this route.
+# Default: /survey
+survey_route: /surveys/my_survey
+
 # Optional: header text displayed at the top of the survey (Markdown format, with HTML support)
 header: |
   ## About this survey
