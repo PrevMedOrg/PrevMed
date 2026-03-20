@@ -21,13 +21,13 @@ show_survey_title: false
 survey_route: lynch
 
 greetings_md: |
-  # Bienvenue sur ProbaLYNCH
+  <h1 style="text-align: center;">Prévention Médicale</h1>
 
-  **ProbaLYNCH** vous permet d'estimer, à titre indicatif, votre probabilité d'être porteur de la fragilité génétique du **[syndrome de Lynch](https://syndrome-de-lynch.fr)**.
+  Recommandations élaborées en consultations pour adulte de génétique-prévention de CHU
 
-  Le questionnaire dure **2 à 6 minutes**. Aucune donnée personnelle n'est stockée : le résultat est un PDF transitoire que vous pouvez sauvegarder.
+  ### [Vous avez eu un cancer colorectal dans votre famille ?](https://preventionfamiliale.fr)
 
-  Cliquez sur le bouton ci-dessous pour commencer.
+  <div style="text-align: right;"><img src="https://preventionfamiliale.fr/Logo.svg" style="height: 3em;" alt="Logo ASAGE"></div>
 
 # Optional header text - rendered as markdown at top of survey page
 header: |
