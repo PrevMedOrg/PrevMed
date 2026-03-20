@@ -5,7 +5,7 @@ from pathlib import Path
 from PrevMed import enable_debug_console
 from PrevMed.utils.settings import settings
 from PrevMed.utils.io import load_scoring_script
-from PrevMed.utils.gui import create_survey_interface
+from PrevMed.utils.gui import create_survey_interface  # gui is now a package
 
 
 def parse_extra_launch_kwargs(unknown_args):
