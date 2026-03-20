@@ -202,6 +202,7 @@ def create_survey_interface(
         # This keeps /dev/shm clean while giving users time to download PDFs
         delete_cache=(300, 600),
     ) as demo:
+        gr.Navbar(visible=False)
         # --- Greetings landing page (optional) ---
         # When greetings_md is in the YAML, the root route / shows a landing
         # page and the survey lives on a separate route via Blocks.route().
@@ -226,6 +227,8 @@ def create_survey_interface(
         survey_ctx = demo
 
     with survey_ctx:
+        if has_greetings:
+            gr.Navbar(visible=False)
         if config.get("page_title"):
             if not config['page_title'].startswith("#") and not config['page_title'].startswith("<"):
                 gr.Markdown(f"# {config['page_title']}")
