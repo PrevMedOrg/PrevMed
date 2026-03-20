@@ -44,7 +44,7 @@ setup(
     python_requires="==3.13",  # bind to 3.13 as it's faster but not as recent as 3.14+
     install_requires=[
         "reportlab  == 4.4.4",
-        "gradio     == 5.49.1",
+        "gradio     == 6.9.0",
         "loguru     == 0.7.3",
         "pyr2       == 2.0.0",
         "pyyaml     == 6.0.3",

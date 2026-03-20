@@ -273,7 +273,7 @@ def cli_launcher():
     logger.info("Main: Lancement de l'interface Gradio")
     # relevant docs: https://www.gradio.app/docs/gradio/blocks
     demo.launch(
-        show_api=False,
+        footer_links=[],  # remove link to api / gradio / settings
         quiet=False,
         debug=args.debug,
         max_threads=args.max_threads,
