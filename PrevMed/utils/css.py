@@ -45,6 +45,22 @@ footer {
     text-align: justify !important;
 }
 
+/* Prevent unwanted scrollbars on Markdown and content containers */
+.gradio-container .md,
+.gradio-container .prose,
+.gradio-container .svelte-1ed2p3z,
+.gradio-container .block,
+.gradio-container .wrap {
+    overflow: visible !important;
+    max-height: none !important;
+}
+/* Ensure long headings wrap properly */
+.gradio-container h1, .gradio-container h2,
+.gradio-container h3, .gradio-container h4 {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+}
+
 /* Hide the Gradio multipage navigation bar */
 .nav-holder {
     display: none !important;
