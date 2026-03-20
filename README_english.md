@@ -360,6 +360,13 @@ show_survey_version: true
 # Optional: display webapp version on the web page and in the PDF (default: true)
 show_webapp_version: true
 
+# Optional: markdown content for the greetings landing page.
+# When set, a greetings page is shown first on route / with this content
+# and the legal terms at the bottom. The user clicks "Start" to reach the survey.
+greetings_md: |
+  # Welcome
+  Landing page description...
+
 # Optional: header text displayed at the top of the survey (Markdown format, with HTML support)
 header: |
   ## About this survey
@@ -689,7 +696,10 @@ PrevMed/
 │   ├── __init__.py          # Logging setup
 │   ├── __main__.py          # CLI entry point
 │   └── utils/
-│       ├── gui.py           # Gradio interface
+│       ├── gui/             # Gradio interface (package)
+│       │   ├── __init__.py  # Re-exports create_survey_interface
+│       │   ├── greetings.py # Greetings page (greetings_md + legal terms)
+│       │   └── survey.py    # Survey (questions, scoring, PDF)
 │       ├── css.py           # CSS used in Gradio
 │       ├── js.py            # JS used in Gradio
 │       ├── io.py            # YAML and script loading

@@ -360,6 +360,14 @@ show_survey_version: true
 # Optionnel: afficher la version de la webapp sur la page web et dans le PDF (par défaut: true)
 show_webapp_version: true
 
+# Optionnel: contenu Markdown de la page d'accueil.
+# Quand défini, une page d'accueil est affichée en premier sur la route /
+# avec ce contenu et les mentions légales en bas. L'utilisateur clique sur
+# "Commencer" pour accéder au questionnaire.
+greetings_md: |
+  # Bienvenue
+  Description de la page d'accueil...
+
 # Optionnel: texte d'en-tête affiché en haut du questionnaire (format Markdown, avec support HTML)
 header: |
   ## À propos de ce questionnaire
@@ -689,7 +697,10 @@ PrevMed/
 │   ├── __init__.py          # Setup du logging
 │   ├── __main__.py          # Point d'entrée CLI
 │   └── utils/
-│       ├── gui.py           # Interface Gradio
+│       ├── gui/             # Interface Gradio (package)
+│       │   ├── __init__.py  # Réexporte create_survey_interface
+│       │   ├── greetings.py # Page d'accueil (greetings_md + mentions légales)
+│       │   └── survey.py    # Questionnaire (questions, scoring, PDF)
 │       ├── css.py           # Le CSS utilisé dans Gradio
 │       ├── js.py            # Le js utilisé dans Gradio
 │       ├── io.py            # Chargement YAML et scripts
