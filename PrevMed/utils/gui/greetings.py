@@ -5,20 +5,22 @@ Creates the landing page shown when the user first opens the app.
 Contains introductory markdown (from the YAML ``greetings_md`` field)
 and the mandatory GDPR legal terms in a collapsible section at the bottom.
 
-A "Start" button toggles visibility to the survey page.
+The "Start" button uses ``gr.Button(link=...)`` to navigate to the survey
+route via Gradio's native ``Blocks.route()`` multipage routing.
 Must be called inside an active ``gr.Blocks`` context.
 """
 
 import gradio as gr
-from typing import Optional, Tuple
+from typing import Optional
 from loguru import logger
 
 
 def create_greetings_section(
     greetings_md: str,
+    survey_route: str = "/survey",
     terms_md_content: Optional[str] = None,
     legal_summary: str = "LEGAL",
-) -> Tuple[gr.Column, gr.Button]:
+) -> gr.Column:
     """
     Build the greetings landing page components.
 
@@ -30,6 +32,9 @@ def create_greetings_section(
     greetings_md : str
         Markdown content for the greetings page, taken from the YAML
         ``greetings_md`` field.
+    survey_route : str, optional
+        Route path for the survey page (default: ``"/survey"``).
+        The start button links to this route.
     terms_md_content : str, optional
         GDPR legal terms markdown loaded from ``--terms-md``.
         Rendered in a collapsible ``<details>`` element at the bottom.
@@ -38,20 +43,19 @@ def create_greetings_section(
 
     Returns
     -------
-    tuple of (gr.Column, gr.Button)
-        The greetings column (visible by default) and the start button,
-        so the caller can wire the button to hide this section and show
-        the survey section.
+    gr.Column
+        The greetings column.
     """
     logger.debug("Création de la section d'accueil")
 
     with gr.Column(visible=True) as greetings_col:
         gr.Markdown(greetings_md)
 
-        start_btn = gr.Button(
+        gr.Button(
             "Commencer le questionnaire →",
             variant="primary",
             size="lg",
+            link=survey_route,
         )
 
         # Legal terms at the bottom of the greetings page, in a collapsible section
@@ -62,4 +66,4 @@ def create_greetings_section(
             )
 
     logger.debug("Section d'accueil créée avec succès")
-    return greetings_col, start_btn
+    return greetings_col
