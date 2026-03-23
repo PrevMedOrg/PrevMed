@@ -51,12 +51,12 @@ def create_greetings_section(
     with gr.Column(visible=True) as greetings_col:
         gr.Markdown(greetings_md)
 
-        gr.Button(
-            "Commencer le questionnaire →",
-            variant="primary",
-            size="lg",
-            link=survey_route,
-        )
+        # gr.Button(
+        #     "Commencer le questionnaire →",
+        #     variant="primary",
+        #     size="lg",
+        #     link=survey_route,
+        # )
 
         # Legal terms at the bottom of the greetings page, in a collapsible section
         if terms_md_content:
