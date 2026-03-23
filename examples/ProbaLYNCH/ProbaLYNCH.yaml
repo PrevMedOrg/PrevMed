@@ -18,16 +18,16 @@ show_survey_title: false
 # Optional: route path for the survey page when greetings_md is set.
 # The greetings page is served at /, and the survey at this route.
 # Default: /survey
-survey_route: lynch
-
-greetings_md: |
-  <h1 style="text-align: center;">Prévention Médicale</h1>
-
-  Recommandations issues de l’expérience acquise en CHU, en médecine adulte, en consultation de génétique-oncogénétique-prévention
-
-  ### [Vous avez eu un cancer colorectal dans votre famille ?](https://preventionfamiliale.fr/lynch)
-
-   <img src="https://preventionfamiliale.fr/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
+# survey_route: lynch
+#
+# greetings_md: |
+#   <h1 style="text-align: center;">Prévention Médicale</h1>
+#
+#   Recommandations issues de l’expérience acquise en CHU, en médecine adulte, en consultation de génétique-oncogénétique-prévention
+#
+#   ### [Vous avez eu un cancer colorectal dans votre famille ?](https://preventionfamiliale.fr/lynch)
+#
+#    <img src="https://preventionfamiliale.fr/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
 
 # Optional header text - rendered as markdown at top of survey page
 header: |
