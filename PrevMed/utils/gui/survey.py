@@ -852,6 +852,18 @@ def create_survey_interface(
             fn=None,
             js="""() => {
                 setTimeout(() => {
+                    // Check if results section is visible (survey completed)
+                    const resultsSection = document.querySelector('.adjusted-results');
+                    if (resultsSection) {
+                        const resultsRect = resultsSection.getBoundingClientRect();
+                        if (resultsRect.height > 0) {
+                            // Survey is complete: scroll to results, not last question
+                            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            // Skip the question scrolling below
+                            return;
+                        }
+                    }
+
                     // Find all question rows within the question container
                     const questionContainer = document.querySelector('.question-container');
                     if (questionContainer) {
