@@ -18,13 +18,23 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # - python3-dev: Python development headers for compilation
 # - libtirpc-dev: Required for rpy2 on some systems
 # - curl: For uv installation
+# Install base dependencies first (including gnupg for apt-key)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    r-base \
-    r-base-dev \
     build-essential \
     python3-dev \
     libtirpc-dev \
     curl \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Add CRAN repository for R >= 4.4 (required by rpy2 >= 3.6)
+RUN curl -fsSL https://cloud.r-project.org/bin/linux/debian/bookworm-cran40/Release.gpg \
+    | gpg --dearmor -o /usr/share/keyrings/cran-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/cran-archive-keyring.gpg] https://cloud.r-project.org/bin/linux/debian bookworm-cran40/" \
+    > /etc/apt/sources.list.d/cran.list \
+    && apt-get update && apt-get install -y --no-install-recommends \
+    r-base \
+    r-base-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv for fast Python package management
