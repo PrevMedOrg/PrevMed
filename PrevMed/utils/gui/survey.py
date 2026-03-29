@@ -290,7 +290,7 @@ def create_survey_interface(
 
         # Results section - positioned at bottom to appear after answering questions
         with gr.Column(elem_classes="adjusted-results"):
-            result_output = gr.Markdown(label="Résultats du scoring", visible=False)
+            result_output = gr.Markdown(label="Résultats du scoring")
             pdf_download = gr.DownloadButton(
                 label="📥 Télécharger le rapport PDF",
                 visible=False,
@@ -712,7 +712,7 @@ def create_survey_interface(
 
                     # Add result component updates to the dictionary
                     updates[result_output] = gr.update(
-                        value=markdown_result, visible=True
+                        value=markdown_result
                     )
                     updates[pdf_download] = gr.update(value=pdf_path, visible=True)
                     # Clear any previous warnings on successful completion
@@ -725,7 +725,7 @@ def create_survey_interface(
                 except Exception as e:
                     logger.error(f"Erreur pendant le scoring: {str(e)}", exc_info=True)
                     # Add error updates to the dictionary
-                    updates[result_output] = gr.update(visible=False)
+                    updates[result_output] = gr.update(value="")
                     updates[pdf_download] = gr.update(visible=False)
                     updates[error_output] = gr.update(value=str(e), visible=True)
                     updates[survey_completed] = False
@@ -733,7 +733,7 @@ def create_survey_interface(
                     return updates
             else:
                 # Not at end yet, hide result components
-                updates[result_output] = gr.update(visible=False)
+                updates[result_output] = gr.update(value="")
                 updates[pdf_download] = gr.update(visible=False)
                 updates[error_output] = gr.update(visible=False)
                 # Reset completion state
@@ -1042,7 +1042,7 @@ def create_survey_interface(
                     )
 
                 # Hide results since answers have changed
-                updates[result_output] = gr.update(visible=False)
+                updates[result_output] = gr.update(value="")
                 updates[pdf_download] = gr.update(visible=False)
                 updates[error_output] = gr.update(visible=False)
                 updates[survey_completed] = False
