@@ -371,6 +371,14 @@ extra_pages:
     body: |
       Description de la page d'accueil...
 
+# Optionnel: CSS personnalisé (contenu inline OU chemin vers un fichier .css)
+# (absolu, ou relatif à ce fichier YAML).
+css: ./style.css
+
+# Optionnel: JavaScript supplémentaire injecté dans le <head> de la page
+# (contenu inline OU chemin vers un fichier .js, absolu ou relatif à ce fichier YAML).
+extra_js: ./extra.js
+
 # Optionnel: texte d'en-tête affiché en haut du questionnaire (format Markdown, avec support HTML)
 # Peut être du Markdown inline OU un chemin vers un fichier .md existant
 # (absolu, ou relatif à ce fichier YAML).
@@ -709,8 +717,7 @@ PrevMed/
 │       │   ├── __init__.py  # Réexporte create_survey_interface
 │       │   ├── extra_pages.py # Pages supplémentaires (extra_pages)
 │       │   └── survey.py    # Questionnaire (questions, scoring, PDF)
-│       ├── css.py           # Le CSS utilisé dans Gradio
-│       ├── js.py            # Le js utilisé dans Gradio
+│       ├── js.py            # Le JS par défaut utilisé dans Gradio
 │       ├── io.py            # Chargement YAML et scripts
 │       ├── logic.py         # Logique conditionnelle
 │       ├── pdf.py           # Génération PDF
@@ -719,7 +726,9 @@ PrevMed/
 ├── examples/
 │   └── ProbaLYNCH/
 │       ├── ProbaLYNCH.yaml      # Configuration ProbaLYNCH
-│       └── ProbaLYNCH.R         # Script de scoring ProbaLYNCH
+│       ├── ProbaLYNCH.R         # Script de scoring ProbaLYNCH
+│       ├── style.css            # CSS personnalisé
+│       └── extra.js             # JavaScript supplémentaire
 ├── logs/                    # Logs rotatifs (créé automatiquement)
 ├── survey_pdfs/             # Rapports PDF (créé automatiquement)
 ├── requirements.txt

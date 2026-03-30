@@ -194,7 +194,7 @@ def create_survey_interface(
             font_mono=["ui-monospace", "SFMono-Regular", "Consolas", "Liberation Mono", "Courier New", "monospace"],
         ),
         analytics_enabled=False,
-        head=analytics_head + "\n\n" + JS_HEAD,
+        head=analytics_head + "\n\n" + JS_HEAD + "\n\n" + config.get("extra_js", ""),
         css=config.get("css", ""),
         # Auto-cleanup: every 5 min (300s), delete files older than 10 min (600s)
         # This keeps /dev/shm clean while giving users time to download PDFs

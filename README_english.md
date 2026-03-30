@@ -371,6 +371,14 @@ extra_pages:
     body: |
       Landing page description...
 
+# Optional: custom CSS (inline content OR path to a .css file)
+# (absolute, or relative to this YAML file).
+css: ./style.css
+
+# Optional: extra JavaScript injected into the page <head>
+# (inline content OR path to a .js file, absolute or relative to this YAML file).
+extra_js: ./extra.js
+
 # Optional: body text displayed at the top of the survey (Markdown format, with HTML support)
 # Can be inline markdown OR a path to an existing .md file (absolute, or relative to this YAML file).
 body: |
@@ -708,8 +716,7 @@ PrevMed/
 │       │   ├── __init__.py  # Re-exports create_survey_interface
 │       │   ├── extra_pages.py # Extra pages (extra_pages)
 │       │   └── survey.py    # Survey (questions, scoring, PDF)
-│       ├── css.py           # CSS used in Gradio
-│       ├── js.py            # JS used in Gradio
+│       ├── js.py            # Default JS used in Gradio
 │       ├── io.py            # YAML and script loading
 │       ├── logic.py         # Conditional logic
 │       ├── pdf.py           # PDF generation
@@ -718,7 +725,9 @@ PrevMed/
 ├── examples/
 │   └── ProbaLYNCH/
 │       ├── ProbaLYNCH.yaml      # ProbaLYNCH configuration
-│       └── ProbaLYNCH.R         # ProbaLYNCH scoring script
+│       ├── ProbaLYNCH.R         # ProbaLYNCH scoring script
+│       ├── style.css            # Custom CSS
+│       └── extra.js             # Extra JavaScript
 ├── logs/                    # Rotating logs (created automatically)
 ├── survey_pdfs/             # PDF reports (created automatically)
 ├── requirements.txt

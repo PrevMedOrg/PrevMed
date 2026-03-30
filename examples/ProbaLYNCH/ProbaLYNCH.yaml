@@ -15,6 +15,9 @@ show_survey_title: false
 # CSS styling (inline or path to .css file)
 css: ./style.css
 
+# Extra JavaScript (inline or path to .js file) injected into the page <head>
+extra_js: ./extra.js
+
 # Optional: extra pages served on their own routes.
 # Each entry supports the same top-level keys as the main config (except
 # "questions") plus a required "route" key.

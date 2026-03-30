@@ -6,7 +6,7 @@ from loguru import logger
 from PrevMed.utils.version import __VERSION__
 
 
-_FILE_PATH_FIELDS = {"header", "body", "css"}
+_FILE_PATH_FIELDS = {"header", "body", "css", "extra_js"}
 
 
 def _resolve_file_paths(config: Dict[str, Any], base_dir: Path) -> None:
