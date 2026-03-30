@@ -363,9 +363,13 @@ show_webapp_version: true
 # Optional: markdown content for the greetings landing page.
 # When set, a greetings page is shown first on route / with this content
 # and the legal terms at the bottom. The user clicks "Start" to reach the survey.
+# Can be inline markdown OR a path to an existing .md file (absolute, or relative to this YAML file).
 greetings_md: |
   # Welcome
   Landing page description...
+
+# File-path alternative:
+# greetings_md: /app/examples/MyApp/greetings.md
 
 # Optional: route path for the survey page when greetings_md is set.
 # The greetings page is served at /, and the survey at this route.
@@ -374,10 +378,14 @@ greetings_md: |
 survey_route: my_survey
 
 # Optional: header text displayed at the top of the survey (Markdown format, with HTML support)
+# Can be inline markdown OR a path to an existing .md file (absolute, or relative to this YAML file).
 header: |
   ## About this survey
 
   Survey description...
+
+# File-path alternative:
+# header: /app/examples/MyApp/header.md
 
 # Optional: Markdown text displayed just before the questions (after the header and versions)
 questions_header: |

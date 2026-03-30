@@ -364,9 +364,14 @@ show_webapp_version: true
 # Quand défini, une page d'accueil est affichée en premier sur la route /
 # avec ce contenu et les mentions légales en bas. L'utilisateur clique sur
 # "Commencer" pour accéder au questionnaire.
+# Peut être du Markdown inline OU un chemin vers un fichier .md existant
+# (absolu, ou relatif à ce fichier YAML).
 greetings_md: |
   # Bienvenue
   Description de la page d'accueil...
+
+# Alternative par chemin de fichier :
+# greetings_md: /app/examples/MonApp/greetings.md
 
 # Optionnel: chemin de la route pour la page du questionnaire quand
 # greetings_md est défini. La page d'accueil est servie sur /,
@@ -375,10 +380,15 @@ greetings_md: |
 survey_route: mon_questionnaire
 
 # Optionnel: texte d'en-tête affiché en haut du questionnaire (format Markdown, avec support HTML)
+# Peut être du Markdown inline OU un chemin vers un fichier .md existant
+# (absolu, ou relatif à ce fichier YAML).
 header: |
   ## À propos de ce questionnaire
 
   Description du questionnaire...
+
+# Alternative par chemin de fichier :
+# header: /app/examples/MonApp/header.md
 
 # Optionnel: texte Markdown affiché juste avant les questions (après le header et les versions)
 questions_header: |
