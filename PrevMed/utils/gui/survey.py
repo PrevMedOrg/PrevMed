@@ -236,9 +236,9 @@ def create_survey_interface(
                 gr.Markdown(config['page_title'])
         elif config.get("show_survey_title", True):
             gr.Markdown(f"# {config['survey_name']}")
-        # Optional header text - rendered as markdown if present in YAML
-        if config.get("header"):
-            gr.Markdown(config["header"])
+        # Optional body text - rendered as markdown if present in YAML
+        if config.get("body"):
+            gr.Markdown(config["body"])
 
         # Version display can be hidden via YAML options (default: shown)
         if config.get("show_survey_version", True):

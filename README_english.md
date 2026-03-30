@@ -377,17 +377,17 @@ greetings_md: |
 # IMPORTANT: do not include / in the value (e.g. "lynch", not "/lynch")
 survey_route: my_survey
 
-# Optional: header text displayed at the top of the survey (Markdown format, with HTML support)
+# Optional: body text displayed at the top of the survey (Markdown format, with HTML support)
 # Can be inline markdown OR a path to an existing .md file (absolute, or relative to this YAML file).
-header: |
+body: |
   ## About this survey
 
   Survey description...
 
 # File-path alternative:
-# header: /app/examples/MyApp/header.md
+# body: /app/examples/MyApp/body.md
 
-# Optional: Markdown text displayed just before the questions (after the header and versions)
+# Optional: Markdown text displayed just before the questions (after the body and versions)
 questions_header: |
   Please answer the following questions.
 
@@ -485,7 +485,7 @@ Answers can be validated before moving to the next question via the `valid_if` f
 The R script must define a `scoring()` function that takes survey variables as named arguments and returns a list with **3 elements**:
 
 1. A character string containing **markdown** to display to the patient
-2. A list of lists representing a **table** (first list = headers, subsequent lists = data rows)
+2. A list of lists representing a **table** (first list = bodys, subsequent lists = data rows)
 3. A named list with **PDF options** (`include_md_in_pdf` and `include_data_in_pdf`)
 
 ```r

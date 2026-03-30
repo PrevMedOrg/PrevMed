@@ -382,15 +382,15 @@ survey_route: mon_questionnaire
 # Optionnel: texte d'en-tête affiché en haut du questionnaire (format Markdown, avec support HTML)
 # Peut être du Markdown inline OU un chemin vers un fichier .md existant
 # (absolu, ou relatif à ce fichier YAML).
-header: |
+body: |
   ## À propos de ce questionnaire
 
   Description du questionnaire...
 
 # Alternative par chemin de fichier :
-# header: /app/examples/MonApp/header.md
+# body: /app/examples/MonApp/body.md
 
-# Optionnel: texte Markdown affiché juste avant les questions (après le header et les versions)
+# Optionnel: texte Markdown affiché juste avant les questions (après le body et les versions)
 questions_header: |
   Veuillez répondre aux questions suivantes.
 
