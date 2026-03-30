@@ -1,69 +1,66 @@
 """
-Greetings page for PrevMed.
+Extra pages for PrevMed.
 
-Creates the landing page shown when the user first opens the app.
-Contains introductory markdown (from the YAML ``greetings_md`` field)
-and the mandatory GDPR legal terms in a collapsible section at the bottom.
+Creates additional pages (e.g. landing / greetings pages) defined via
+the ``extra_pages`` list in the YAML configuration.  Each extra page is
+served on its own route via Gradio's native ``Blocks.route()`` multipage
+routing.
 
-The "Start" button uses ``gr.Button(link=...)`` to navigate to the survey
-route via Gradio's native ``Blocks.route()`` multipage routing.
 Must be called inside an active ``gr.Blocks`` context.
 """
 
 import gradio as gr
-from typing import Optional
+from typing import Any, Dict, List, Optional
 from loguru import logger
 
 
-def create_greetings_section(
-    greetings_md: str,
-    survey_route: str = "survey",
+def create_extra_page(
+    page_config: Dict[str, Any],
     terms_md_content: Optional[str] = None,
-    legal_summary: str = "LEGAL",
+    default_legal_summary: str = "LEGAL",
 ) -> gr.Column:
     """
-    Build the greetings landing page components.
+    Build an extra page from its configuration dict.
 
-    Must be called inside an active ``gr.Blocks()`` context because it creates
-    Gradio components (Column, Markdown, Button) that need a parent.
+    Must be called inside an active ``gr.Blocks()`` or route context.
 
     Parameters
     ----------
-    greetings_md : str
-        Markdown content for the greetings page, taken from the YAML
-        ``greetings_md`` field.
-    survey_route : str, optional
-        Route path for the survey page (default: ``"survey"``).
-        The start button links to this route.
+    page_config : dict
+        Configuration for this extra page.  Supports keys such as
+        ``body``, ``page_title``, ``legal_summary``, etc.
     terms_md_content : str, optional
         GDPR legal terms markdown loaded from ``--terms-md``.
         Rendered in a collapsible ``<details>`` element at the bottom.
-    legal_summary : str, optional
-        Label for the collapsible legal section (default: ``"LEGAL"``).
+    default_legal_summary : str, optional
+        Fallback label for the collapsible legal section.
 
     Returns
     -------
     gr.Column
-        The greetings column.
+        The page column.
     """
-    logger.debug("Création de la section d'accueil")
+    route = page_config.get("route", "page")
+    logger.debug(f"Création de la page supplémentaire: /{route}")
 
-    with gr.Column(visible=True) as greetings_col:
-        gr.Markdown(greetings_md)
+    with gr.Column(visible=True) as page_col:
+        if page_config.get("page_title"):
+            title = page_config["page_title"]
+            if not title.startswith("#") and not title.startswith("<"):
+                gr.Markdown(f"# {title}")
+            else:
+                gr.Markdown(title)
 
-        # gr.Button(
-        #     "Commencer le questionnaire →",
-        #     variant="primary",
-        #     size="lg",
-        #     link=survey_route,
-        # )
+        if page_config.get("body"):
+            gr.Markdown(page_config["body"])
 
-        # Legal terms at the bottom of the greetings page, in a collapsible section
+        # Legal terms at the bottom, in a collapsible section
+        legal_summary = page_config.get("legal_summary", default_legal_summary)
         if terms_md_content:
             gr.Markdown(
                 f"<details><summary>{legal_summary}</summary>"
                 f"\n\n{terms_md_content}\n\n</details>"
             )
 
-    logger.debug("Section d'accueil créée avec succès")
-    return greetings_col
+    logger.debug(f"Page supplémentaire /{route} créée avec succès")
+    return page_col

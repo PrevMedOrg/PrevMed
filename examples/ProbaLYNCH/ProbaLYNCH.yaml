@@ -12,22 +12,18 @@ PrevMed_version: 1.1.0
 # Optional: display survey_name as a title at the top of the page (default: true)
 show_survey_title: false
 
-# Optional: markdown content for the greetings landing page.
-# When set, a greetings page is shown first on route / with this content
-# and the legal terms at the bottom. The user clicks "Start" to reach the survey.
-# Optional: route path for the survey page when greetings_md is set.
-# The greetings page is served at /, and the survey at this route.
-# Default: /survey
-# survey_route: lynch
+# Optional: extra pages served on their own routes.
+# Each entry supports the same top-level keys as the main config (except
+# "questions") plus a required "route" key.
 #
-# greetings_md: |
-#   <h1 style="text-align: center;">Prévention Médicale</h1>
+# extra_pages:
+#   - route: home
+#     page_title: "Prévention Médicale"
+#     body: |
+#       Recommandations issues de l’expérience acquise en CHU, en médecine adulte,
+#       en consultation de génétique-oncogénétique-prévention
 #
-#   Recommandations issues de l’expérience acquise en CHU, en médecine adulte, en consultation de génétique-oncogénétique-prévention
-#
-#   ### [Vous avez eu un cancer colorectal dans votre famille ?](https://preventionfamiliale.fr/lynch)
-#
-#    <img src="https://preventionfamiliale.fr/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
+#       ### [Vous avez eu un cancer colorectal dans votre famille ?](https://preventionfamiliale.fr/lynch)
 
 # Optional body text - rendered as markdown at top of survey page
 body: ./md/body.md

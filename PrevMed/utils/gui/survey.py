@@ -2,9 +2,8 @@
 Survey interface for PrevMed.
 
 Builds the Gradio Blocks application that contains the questionnaire.
-When a ``greetings_md`` field is present in the YAML configuration,
-a greetings landing page (from ``gui/greetings.py``) is shown at ``/``
-and the survey is served on a separate route via ``Blocks.route()``.
+Extra pages defined in ``extra_pages`` are served on their own routes
+via ``Blocks.route()``.
 """
 
 import hashlib
@@ -27,7 +26,7 @@ from PrevMed.utils.settings import settings
 from PrevMed.utils.version import __VERSION__
 from PrevMed.utils.css import CSS
 from PrevMed.utils.js import JS_HEAD
-from PrevMed.utils.gui.greetings import create_greetings_section
+from PrevMed.utils.gui.greetings import create_extra_page
 
 
 def create_widget_for_question(question: Dict[str, Any]) -> gr.components.Component:
@@ -203,32 +202,22 @@ def create_survey_interface(
         delete_cache=(300, 600),
     ) as demo:
         gr.Navbar(visible=False)
-        # --- Greetings landing page (optional) ---
-        # When greetings_md is in the YAML, the root route / shows a landing
-        # page and the survey lives on a separate route via Blocks.route().
-        has_greetings = bool(config.get("greetings_md"))
-        survey_route = config.get("survey_route", "survey")
 
-        if has_greetings:
-            create_greetings_section(
-                greetings_md=config["greetings_md"],
-                survey_route=survey_route,
+    # --- Extra pages (optional) ---
+    extra_pages = config.get("extra_pages", [])
+    for page_cfg in extra_pages:
+        route = page_cfg.get("route", "page")
+        page_ctx = demo.route(page_cfg.get("page_title", route), route)
+        with page_ctx:
+            gr.Navbar(visible=False)
+            create_extra_page(
+                page_config=page_cfg,
                 terms_md_content=terms_md_content,
-                legal_summary=config.get("legal_summary", "LEGAL"),
+                default_legal_summary=config.get("legal_summary", "LEGAL"),
             )
 
     # --- Survey content ---
-    # When greetings exist, the survey is on a sub-route via Blocks.route().
-    # When there is no greetings page, the survey was already rendered above
-    # inside the main Blocks context (no route needed).
-    if has_greetings:
-        survey_ctx = demo.route("Questionnaire", survey_route)
-    else:
-        survey_ctx = demo
-
-    with survey_ctx:
-        if has_greetings:
-            gr.Navbar(visible=False)
+    with demo:
         if config.get("page_title"):
             if not config['page_title'].startswith("#") and not config['page_title'].startswith("<"):
                 gr.Markdown(f"# {config['page_title']}")
@@ -1074,9 +1063,8 @@ def create_survey_interface(
             show_progress="hidden",
         )
 
-        # Display legal terms at the very bottom of the survey page,
-        # but only when there is no greetings page (which already shows them).
-        if terms_md_content and not has_greetings:
+        # Display legal terms at the very bottom of the survey page
+        if terms_md_content:
             gr.Markdown(
                 f"<details><summary>{config.get('legal_summary', 'LEGAL')}</summary>\n\n{terms_md_content}\n\n</details>"
             )
