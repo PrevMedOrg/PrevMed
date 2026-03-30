@@ -1,7 +1,7 @@
 """
 Extra pages for PrevMed.
 
-Creates additional pages (e.g. landing / greetings pages) defined via
+Creates additional pages defined via
 the ``extra_pages`` list in the YAML configuration.  Each extra page is
 served on its own route via Gradio's native ``Blocks.route()`` multipage
 routing.

@@ -706,7 +706,7 @@ PrevMed/
 │   └── utils/
 │       ├── gui/             # Gradio interface (package)
 │       │   ├── __init__.py  # Re-exports create_survey_interface
-│       │   ├── greetings.py # Extra pages (extra_pages)
+│       │   ├── extra_pages.py # Extra pages (extra_pages)
 │       │   └── survey.py    # Survey (questions, scoring, PDF)
 │       ├── css.py           # CSS used in Gradio
 │       ├── js.py            # JS used in Gradio

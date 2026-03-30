@@ -26,7 +26,7 @@ from PrevMed.utils.settings import settings
 from PrevMed.utils.version import __VERSION__
 from PrevMed.utils.css import CSS
 from PrevMed.utils.js import JS_HEAD
-from PrevMed.utils.gui.greetings import create_extra_page
+from PrevMed.utils.gui.extra_pages import create_extra_page
 
 
 def create_widget_for_question(question: Dict[str, Any]) -> gr.components.Component:
