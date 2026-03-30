@@ -12,6 +12,9 @@ PrevMed_version: 1.1.0
 # Optional: display survey_name as a title at the top of the page (default: true)
 show_survey_title: false
 
+# CSS styling (inline or path to .css file)
+css: ./style.css
+
 # Optional: extra pages served on their own routes.
 # Each entry supports the same top-level keys as the main config (except
 # "questions") plus a required "route" key.

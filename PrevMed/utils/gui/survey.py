@@ -24,7 +24,6 @@ from PrevMed.utils.logic import (
 from PrevMed.utils.pdf import generate_pdf_report
 from PrevMed.utils.settings import settings
 from PrevMed.utils.version import __VERSION__
-from PrevMed.utils.css import CSS
 from PrevMed.utils.js import JS_HEAD
 from PrevMed.utils.gui.extra_pages import create_extra_page
 
@@ -196,7 +195,7 @@ def create_survey_interface(
         ),
         analytics_enabled=False,
         head=analytics_head + "\n\n" + JS_HEAD,
-        css=CSS,
+        css=config.get("css", ""),
         # Auto-cleanup: every 5 min (300s), delete files older than 10 min (600s)
         # This keeps /dev/shm clean while giving users time to download PDFs
         delete_cache=(300, 600),
