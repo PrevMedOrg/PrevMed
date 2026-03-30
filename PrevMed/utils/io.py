@@ -6,6 +6,22 @@ from loguru import logger
 from PrevMed.utils.version import __VERSION__
 
 
+_FILE_PATH_FIELDS = {"header", "greetings_md"}
+
+
+def _resolve_file_paths(config: Dict[str, Any], base_dir: Path) -> None:
+    """Replace file-path references with file contents for known string fields."""
+    for field in _FILE_PATH_FIELDS:
+        value = config.get(field)
+        if isinstance(value, str):
+            candidate = Path(value)
+            if not candidate.is_absolute():
+                candidate = base_dir / candidate
+            if candidate.exists():
+                logger.debug(f"Chargement du contenu de '{field}' depuis: {candidate}")
+                config[field] = candidate.read_text(encoding="utf-8")
+
+
 def load_yaml(filepath: str) -> Dict[str, Any]:
     """Charge et parse le fichier de configuration YAML."""
     logger.info(f"Chargement de la configuration YAML depuis: {filepath}")
@@ -48,6 +64,10 @@ def load_yaml(filepath: str) -> Dict[str, Any]:
                 raise ValueError(
                     f"L'ordre des questions doit se terminer à {len(questions)}, mais l'ordre maximum trouvé est: {max(orders)}"
                 )
+
+        # Resolve file-path references in string fields
+        yaml_dir = Path(filepath).parent
+        _resolve_file_paths(config, yaml_dir)
 
         logger.success(
             f"Configuration YAML chargée avec succès avec {len(config.get('questions', []))} questions"
