@@ -30,7 +30,7 @@ show_survey_title: false
 #    <img src="https://preventionfamiliale.fr/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
 
 # Optional header text - rendered as markdown at top of survey page
-header: /app/examples/ProbaLynch/header.md
+header: ./md/header.md
 questions_header: "## Evaluez votre probabilité de porter sans le savoir la fragilité dite du [syndrome de Lynch](https://syndrome-de-lynch.fr)"
 
 questions:
