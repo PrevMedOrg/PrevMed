@@ -360,22 +360,16 @@ show_survey_version: true
 # Optional: display webapp version on the web page and in the PDF (default: true)
 show_webapp_version: true
 
-# Optional: markdown content for the greetings landing page.
-# When set, a greetings page is shown first on route / with this content
-# and the legal terms at the bottom. The user clicks "Start" to reach the survey.
-# Can be inline markdown OR a path to an existing .md file (absolute, or relative to this YAML file).
-greetings_md: |
-  # Welcome
-  Landing page description...
-
-# File-path alternative:
-# greetings_md: /app/examples/MyApp/greetings.md
-
-# Optional: route path for the survey page when greetings_md is set.
-# The greetings page is served at /, and the survey at this route.
-# Default: survey
-# IMPORTANT: do not include / in the value (e.g. "lynch", not "/lynch")
-survey_route: my_survey
+# Optional: extra pages served on their own routes.
+# Each entry supports the same top-level keys as the main config (except
+# "questions") plus a required "route" key.
+# "body" and "header" values can be inline markdown OR a path to an
+# existing .md file (absolute, or relative to this YAML file).
+extra_pages:
+  - route: home
+    page_title: "Welcome"
+    body: |
+      Landing page description...
 
 # Optional: body text displayed at the top of the survey (Markdown format, with HTML support)
 # Can be inline markdown OR a path to an existing .md file (absolute, or relative to this YAML file).
@@ -712,7 +706,7 @@ PrevMed/
 │   └── utils/
 │       ├── gui/             # Gradio interface (package)
 │       │   ├── __init__.py  # Re-exports create_survey_interface
-│       │   ├── greetings.py # Greetings page (greetings_md + legal terms)
+│       │   ├── greetings.py # Extra pages (extra_pages)
 │       │   └── survey.py    # Survey (questions, scoring, PDF)
 │       ├── css.py           # CSS used in Gradio
 │       ├── js.py            # JS used in Gradio
