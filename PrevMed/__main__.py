@@ -160,6 +160,14 @@ def cli_launcher():
         help="Ignorer les préférences 'Do Not Track' du navigateur et effectuer le suivi même si DNT est activé (défaut: respecter DNT)",
     )
     parser.add_argument(
+        "--files-dir",
+        type=str,
+        required=False,
+        help="Chemin vers un répertoire de fichiers à rendre accessibles via une URL statique Gradio "
+        "(ex: http://<host>/gradio_api/file=<chemin-absolu-du-fichier>). "
+        "Utile pour servir des images, documents ou autres ressources depuis le questionnaire.",
+    )
+    parser.add_argument(
         "--terms-md",
         type=str,
         required=True,
@@ -270,6 +278,21 @@ def cli_launcher():
     else:
         logger.info("Main: File d'attente des requêtes désactivée")
 
+    # Build allowed_paths list
+    # /dev/shm is RAM-based tmpfs used for PDF downloads to avoid disk writes
+    # Gradio needs explicit permission to serve files from this directory
+    allowed_paths = ["/dev/shm"]
+    if args.files_dir:
+        files_dir = Path(args.files_dir).resolve()
+        if not files_dir.is_dir():
+            logger.error(f"Répertoire de fichiers introuvable: {args.files_dir}")
+            raise SystemExit(f"Erreur: Répertoire introuvable: {args.files_dir}")
+        allowed_paths.append(str(files_dir))
+        logger.info(
+            f"Répertoire de fichiers statiques ajouté: {files_dir} "
+            f"(accessible via /gradio_api/file={files_dir}/<nom-du-fichier>)"
+        )
+
     logger.info("Main: Lancement de l'interface Gradio")
     # relevant docs: https://www.gradio.app/docs/gradio/blocks
     demo.launch(
@@ -289,9 +312,7 @@ def cli_launcher():
         auth_message="Please login" if auth_pairs else None,
         server_name=args.server_name,
         server_port=args.port,
-        # /dev/shm is RAM-based tmpfs used for PDF downloads to avoid disk writes
-        # Gradio needs explicit permission to serve files from this directory
-        allowed_paths=["/dev/shm"],
+        allowed_paths=allowed_paths,
         **extra_launch_kwargs,
     )
 

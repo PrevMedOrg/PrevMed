@@ -34,6 +34,10 @@ services:
       # Persist survey data if --save-user-data is enabled
       # Note: Create this directory on the host with proper permissions before running
       - ../survey_data:/app/survey_data
+      # Optional: mount a directory of static files accessible via Gradio URLs
+      # Use with --files-dir /app/files in the command section
+      # Files will be available at http://<host>:<port>/gradio_api/file=/app/files/<filename>
+      - ../files:/app/files:ro
     environment:
       # Default configuration via environment variables
       # These can be overridden in the command or via .env file
@@ -63,5 +67,6 @@ services:
     #   --umami-website-id "your-website-id"
     #   --umami-ignore-dnt
     #   --terms-md examples/terms_example.md
+    #   --files-dir /app/files
     #   --max-threads 100
     #   --no-queue

@@ -157,6 +157,7 @@ sudo docker compose up --build -d
 
 **Gestion des volumes :**
 - Les dossiers `logs/` et `survey_data/` sont **montés comme volumes** pour persister les données entre redémarrages
+- Le dossier `files/` est monté en lecture seule pour servir des fichiers statiques via `--files-dir /app/files` (les fichiers sont accessibles à `http://<host>:<port>/gradio_api/file=/app/files/<nom-du-fichier>`)
 - Les PDFs sont générés **en mémoire** par défaut (pas de fichiers sur disque), assurant une confidentialité maximale
 
 **Sécurité du conteneur Docker :**
@@ -231,6 +232,11 @@ prevmed --survey-yaml <yaml> --scoring-script <script> --actual-url "https://sur
 # Ce fichier doit contenir au minimum : responsable du traitement, finalités,
 # durée de conservation et droits des personnes concernées (RGPD art. 13/14).
 prevmed --survey-yaml <yaml> --scoring-script <script> --terms-md mentions_legales.md
+
+# Servir un répertoire de fichiers statiques via des URLs Gradio
+# Les fichiers seront accessibles à http://<host>:<port>/gradio_api/file=<chemin-absolu>/<fichier>
+# Voir https://www.gradio.app/guides/file-access pour plus de détails
+prevmed --survey-yaml <yaml> --scoring-script <script> --files-dir /chemin/vers/fichiers
 ```
 
 #### Arguments supplémentaires pour demo.launch()
