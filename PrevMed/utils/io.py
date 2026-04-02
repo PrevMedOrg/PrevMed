@@ -77,8 +77,40 @@ def load_yaml(filepath: str) -> Dict[str, Any]:
                     f"L'ordre des questions doit se terminer à {len(questions)}, mais l'ordre maximum trouvé est: {max(orders)}"
                 )
 
-        # Resolve file-path references in string fields
+        # Validate that the main page has a route (default to "/")
+        if "route" not in config:
+            config["route"] = "/"
+            logger.debug("Aucune route définie pour la page principale, utilisation de '/' par défaut")
+
+        # Resolve extra_pages: entries can be paths to YAML files
         yaml_dir = Path(filepath).parent
+        raw_extra = config.get("extra_pages", [])
+        resolved_extra: list[Dict[str, Any]] = []
+        for entry in raw_extra:
+            if isinstance(entry, str):
+                # Treat as a path to a YAML file
+                ep_path = Path(entry)
+                if not ep_path.is_absolute():
+                    ep_path = yaml_dir / ep_path
+                logger.debug(f"Chargement d'une extra_page depuis: {ep_path}")
+                with open(ep_path, "r", encoding="utf-8") as ep_f:
+                    ep_config = yaml.safe_load(ep_f)
+                # Resolve file paths relative to the extra page YAML's directory
+                _resolve_file_paths(ep_config, ep_path.parent)
+                resolved_extra.append(ep_config)
+            else:
+                resolved_extra.append(entry)
+        if resolved_extra:
+            config["extra_pages"] = resolved_extra
+
+        # Validate that every extra page has a 'route' key
+        for i, page in enumerate(config.get("extra_pages", [])):
+            if "route" not in page:
+                raise ValueError(
+                    f"L'extra_page n°{i + 1} n'a pas de clé 'route' obligatoire"
+                )
+
+        # Resolve file-path references in string fields
         _resolve_file_paths(config, yaml_dir)
 
         logger.success(

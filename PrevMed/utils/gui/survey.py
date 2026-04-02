@@ -205,7 +205,7 @@ def create_survey_interface(
     # --- Extra pages (optional) ---
     extra_pages = config.get("extra_pages", [])
     for page_cfg in extra_pages:
-        route = page_cfg.get("route", "page")
+        route = page_cfg["route"]
         page_ctx = demo.route(page_cfg.get("page_title", route), route)
         with page_ctx:
             gr.Navbar(visible=False)
