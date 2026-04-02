@@ -18,6 +18,9 @@ css: ./style.css
 # Extra JavaScript (inline or path to .js file) injected into the page <head>
 extra_js: ./extra.js
 
+# Optional body text - rendered as markdown at top of survey page
+body: ./md/body.md
+
 # Optional: extra pages served on their own routes.
 # Each entry supports the same top-level keys as the main config (except
 # "questions") plus a required "route" key.
@@ -31,8 +34,6 @@ extra_js: ./extra.js
 #
 #       ### [Vous avez eu un cancer colorectal dans votre famille ?](https://preventionfamiliale.fr/lynch)
 
-# Optional body text - rendered as markdown at top of survey page
-body: ./md/body.md
 questions_header: "## Evaluez votre probabilité de porter sans le savoir la fragilité dite du [syndrome de Lynch](https://syndrome-de-lynch.fr)"
 
 questions:
