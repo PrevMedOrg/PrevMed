@@ -246,6 +246,9 @@ def cli_launcher():
     terms_md_content = terms_md_path.read_text(encoding="utf-8")
     logger.info(f"Mentions légales chargées depuis: {args.terms_md}")
 
+    # Reserve the "files" route when --files-dir is used to avoid conflicts
+    reserved_routes = ["files"] if args.files_dir else None
+
     demo = create_survey_interface(
         yaml_path=survey_yaml_path,
         scoring_language=scoring_language,
@@ -255,6 +258,7 @@ def cli_launcher():
         umami_website_id=args.umami_website_id,
         umami_do_not_track=args.umami_do_not_track,
         terms_md_content=terms_md_content,
+        reserved_routes=reserved_routes,
     )
 
     # Process multiple auth pairs if provided

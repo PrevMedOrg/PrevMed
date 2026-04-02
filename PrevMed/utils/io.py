@@ -34,7 +34,7 @@ def _resolve_file_paths(config: Dict[str, Any], base_dir: Path) -> None:
                     page[field] = candidate.read_text(encoding="utf-8")
 
 
-def load_yaml(filepath: str) -> Dict[str, Any]:
+def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[str, Any]:
     """Charge et parse le fichier de configuration YAML."""
     logger.info(f"Chargement de la configuration YAML depuis: {filepath}")
     try:
@@ -103,12 +103,39 @@ def load_yaml(filepath: str) -> Dict[str, Any]:
         if resolved_extra:
             config["extra_pages"] = resolved_extra
 
-        # Validate that every extra page has a 'route' key
+        # Validate extra page routes
+        extra_routes: list[str] = []
         for i, page in enumerate(config.get("extra_pages", [])):
             if "route" not in page:
                 raise ValueError(
                     f"L'extra_page n°{i + 1} n'a pas de clé 'route' obligatoire"
                 )
+            route = page["route"]
+            # Gradio does not support hierarchical routes (no '/' except as first char)
+            stripped = route.lstrip("/")
+            if "/" in stripped:
+                raise ValueError(
+                    f"L'extra_page n°{i + 1} a une route invalide '{route}': "
+                    "les sous-chemins (contenant '/') ne sont pas supportés par Gradio"
+                )
+            extra_routes.append(stripped)
+
+        # Check for duplicate routes among extra pages
+        seen: set[str] = set()
+        for i, r in enumerate(extra_routes):
+            if r in seen:
+                raise ValueError(
+                    f"Route dupliquée '{r}' trouvée dans les extra_pages"
+                )
+            seen.add(r)
+
+        # Check for conflicts with reserved routes (e.g. "files" when --files-dir is used)
+        if reserved_routes:
+            for r in extra_routes:
+                if r in reserved_routes:
+                    raise ValueError(
+                        f"La route '{r}' est réservée et ne peut pas être utilisée comme extra_page"
+                    )
 
         # Resolve file-path references in string fields
         _resolve_file_paths(config, yaml_dir)

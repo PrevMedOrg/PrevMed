@@ -113,6 +113,7 @@ def create_survey_interface(
     umami_website_id: Optional[str] = None,
     umami_do_not_track: bool = True,
     terms_md_content: Optional[str] = None,
+    reserved_routes: list[str] | None = None,
 ) -> gr.Blocks:
     """
     Crée une interface Gradio Blocks à partir de la configuration YAML avec une question à la fois.
@@ -144,7 +145,7 @@ def create_survey_interface(
     """
     logger.info(f"Création de l'interface du questionnaire depuis le YAML: {yaml_path}")
 
-    config = load_yaml(yaml_path)
+    config = load_yaml(yaml_path, reserved_routes=reserved_routes)
     questions = sorted(config["questions"], key=lambda q: q["order"])
 
     logger.info(
