@@ -215,7 +215,8 @@ def create_survey_interface(
                 default_legal_summary=config.get("legal_summary", "LEGAL"),
             )
 
-    # --- Survey content ---
+    # --- Survey content (main page at root "/") ---
+    demo.current_page = ""
     with demo:
         if config.get("page_title"):
             if not config['page_title'].startswith("#") and not config['page_title'].startswith("<"):
