@@ -2,9 +2,9 @@
 
 <h2 style="text-align: center;">Le passé peut dès maintenant protéger l'avenir</h2>
 <br>
-<h2 style="text-align: center;">Un seul cas de cancer colorectal, même il y a 50 ans, chez vous ou parmi les membres de votre famille, pose une fois sur trois la question d'un risque majeur de cancer <a href="https://preventionfamiliale.fr/Comprendre-la-Genetique.pdf">génétique</a>, pour vous-même et pour vos enfants, présentement et dans le futur.</h2>
+<h2 style="text-align: center;">Un seul cas de cancer colorectal, même il y a 50 ans, chez vous ou parmi les membres de votre famille, pose une fois sur trois la question d'un risque majeur de cancer <a href="https://preventionfamiliale.fr/files/Comprendre-la-Genetique.pdf">génétique</a>, pour vous-même et pour vos enfants, présentement et dans le futur.</h2>
 
-<img src="https://preventionfamiliale.fr/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
+<img src="https://preventionfamiliale.fr/files/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
 
 <details><summary>Plus d'information (clic sur triangles)</summary>
 
@@ -18,7 +18,7 @@ Le test génétique confirmant ce diagnostic, cette femme est à risque majeur d
 
 <details><summary>150&nbsp;000 personnes en danger sans le savoir, qui peuvent avoir transmis leur risque de cancer à leurs enfants</summary>
 
-En effet, environ 150&nbsp;000 personnes sont actuellement en France porteuses d’un risque génétique majeur, particulièrement de cancer colorectal, sans le savoir et, par conséquent, sans être protégées de leur risque majeur de cancer du « [syndrome de Lynch](https://syndrome-de-lynch.fr) » et sans protéger leurs enfants auxquels elles peuvent avoir transmis leur risque. En bref, il s’agit d’une [maladie héréditaire](https://preventionfamiliale.fr/Comprendre-la-Genetique.pdf) fréquente (environ une personne sur 300 porte la fragilité génétique), actuellement très sous-diagnostiquée en France (seulement 20&nbsp;000 personnes environ ont été diagnostiquées depuis 2003 : 12% des personnes porteuses de la fragilité), car se manifestant souvent de manière différente chez plusieurs membres de la famille, sans attirer l’attention :
+En effet, environ 150&nbsp;000 personnes sont actuellement en France porteuses d’un risque génétique majeur, particulièrement de cancer colorectal, sans le savoir et, par conséquent, sans être protégées de leur risque majeur de cancer du « [syndrome de Lynch](https://syndrome-de-lynch.fr) » et sans protéger leurs enfants auxquels elles peuvent avoir transmis leur risque. En bref, il s’agit d’une [maladie héréditaire](https://preventionfamiliale.fr/files/Comprendre-la-Genetique.pdf) fréquente (environ une personne sur 300 porte la fragilité génétique), actuellement très sous-diagnostiquée en France (seulement 20&nbsp;000 personnes environ ont été diagnostiquées depuis 2003 : 12% des personnes porteuses de la fragilité), car se manifestant souvent de manière différente chez plusieurs membres de la famille, sans attirer l’attention :
 
 - certains membres porteurs de la famille restent indemnes, alors qu’ils peuvent avoir transmis la fragilité génétique à un ou plusieurs de leurs enfants, masquant le caractère héréditaire, d’autant que de nombreux membres de la famille sont non-porteurs,
 
