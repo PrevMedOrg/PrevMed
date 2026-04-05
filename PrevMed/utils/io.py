@@ -14,24 +14,30 @@ def _resolve_file_paths(config: Dict[str, Any], base_dir: Path) -> None:
     for field in _FILE_PATH_FIELDS:
         value = config.get(field)
         if isinstance(value, str):
-            candidate = Path(value)
-            if not candidate.is_absolute():
-                candidate = base_dir / candidate
-            if candidate.exists():
-                logger.debug(f"Chargement du contenu de '{field}' depuis: {candidate}")
-                config[field] = candidate.read_text(encoding="utf-8")
+            try:
+                candidate = Path(value)
+                if not candidate.is_absolute():
+                    candidate = base_dir / candidate
+                if candidate.exists():
+                    logger.debug(f"Chargement du contenu de '{field}' depuis: {candidate}")
+                    config[field] = candidate.read_text(encoding="utf-8")
+            except OSError:
+                pass
 
     # Resolve file paths inside extra_pages entries
     for page in config.get("extra_pages", []):
         for field in _FILE_PATH_FIELDS:
             value = page.get(field)
             if isinstance(value, str):
-                candidate = Path(value)
-                if not candidate.is_absolute():
-                    candidate = base_dir / candidate
-                if candidate.exists():
-                    logger.debug(f"Chargement du contenu de '{field}' (extra_page) depuis: {candidate}")
-                    page[field] = candidate.read_text(encoding="utf-8")
+                try:
+                    candidate = Path(value)
+                    if not candidate.is_absolute():
+                        candidate = base_dir / candidate
+                    if candidate.exists():
+                        logger.debug(f"Chargement du contenu de '{field}' (extra_page) depuis: {candidate}")
+                        page[field] = candidate.read_text(encoding="utf-8")
+                except OSError:
+                    pass
 
 
 def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[str, Any]:
