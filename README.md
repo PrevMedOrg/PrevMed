@@ -366,6 +366,10 @@ show_survey_version: true
 # Optionnel: afficher la version de la webapp sur la page web et dans le PDF (par défaut: true)
 show_webapp_version: true
 
+# Optionnel: route pour la page principale du questionnaire (par défaut: "/")
+# Obligatoire si extra_pages est défini.
+route: /
+
 # Optionnel: pages supplémentaires servies sur des routes dédiées.
 # Chaque entrée accepte les mêmes clés que la config principale (sauf
 # "questions") plus une clé "route" obligatoire.
@@ -422,6 +426,7 @@ questions:
       choices: ["Option1", "Option2"]  # Pour Radio
       precision: 0  # Pour Number
       step: 1  # Pour Slider
+      value: 0  # Valeur par défaut du widget (optionnel)
       label: "Texte du widget"          # Optionnel: par défaut utilise question
     question: "Texte de la question"
     skip_if: "(nom_variable == 2) and (nom_variable > autre_variable)"  # Si l'expression vaut True alors la question n'est pas posée (l'expression doit être en Python et a accès aux variables du reste du script.)
@@ -732,9 +737,11 @@ PrevMed/
 ├── examples/
 │   └── ProbaLYNCH/
 │       ├── ProbaLYNCH.yaml      # Configuration ProbaLYNCH
-│       ├── ProbaLYNCH.R         # Script de scoring ProbaLYNCH
+│       ├── ProbaLYNCH.R         # Script de scoring ProbaLYNCH (R)
+│       ├── ProbaLYNCH.py        # Script de scoring ProbaLYNCH (Python)
 │       ├── style.css            # CSS personnalisé
-│       └── extra.js             # JavaScript supplémentaire
+│       ├── extra.js             # JavaScript supplémentaire
+│       └── md/                  # Fichiers Markdown (body, etc.)
 ├── logs/                    # Logs rotatifs (créé automatiquement)
 ├── survey_pdfs/             # Rapports PDF (créé automatiquement)
 ├── requirements.txt
