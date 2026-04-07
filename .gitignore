@@ -9,5 +9,3 @@ survey_data/**/*csv
 temp_pdfs
 client
 deploy.sh
-# Legal notices contain site-specific information, not committed
-mentions_legales.md
