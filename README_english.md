@@ -434,6 +434,7 @@ questions:
     skip_if: "(variable_name == 2) and (variable_name > other_variable)"  # If the expression is True then the question is not asked (the expression must be in Python and has access to variables from the rest of the script.)
 ```
 
+**Strict YAML key validation:** PrevMed validates keys at every level (root, question, extra_page). Any unknown or missing required key causes an immediate error with an explicit message listing the allowed keys. This helps catch typos and obsolete keys early.
 
 ### Available widget types
 

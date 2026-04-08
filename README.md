@@ -435,6 +435,7 @@ questions:
     skip_if: "(nom_variable == 2) and (nom_variable > autre_variable)"  # Si l'expression vaut True alors la question n'est pas posée (l'expression doit être en Python et a accès aux variables du reste du script.)
 ```
 
+**Validation stricte des clés YAML :** PrevMed valide les clés à chaque niveau (racine, question, extra_page). Toute clé inconnue ou manquante provoque une erreur immédiate avec un message explicite listant les clés autorisées. Cela permet de détecter rapidement les fautes de frappe ou les clés obsolètes.
 
 ### Types de widgets disponibles
 
