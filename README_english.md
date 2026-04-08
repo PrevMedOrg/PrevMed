@@ -367,7 +367,10 @@ show_survey_version: true
 show_webapp_version: true
 
 # Optional: route for the main survey page (default: "/")
-# Required if extra_pages is defined.
+# Allows serving the survey on a route other than "/",
+# e.g. "survey", freeing "/" for an extra_page.
+# Sub-paths (containing '/') are not supported by Gradio.
+# Must not conflict with extra_pages routes or reserved routes.
 route: /
 
 # Optional: extra pages served on their own routes.

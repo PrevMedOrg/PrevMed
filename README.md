@@ -367,7 +367,10 @@ show_survey_version: true
 show_webapp_version: true
 
 # Optionnel: route pour la page principale du questionnaire (par défaut: "/")
-# Obligatoire si extra_pages est défini.
+# Permet de servir le questionnaire sur une route autre que "/",
+# par ex. "survey", ce qui libère "/" pour une extra_page.
+# Les sous-chemins (contenant '/') ne sont pas supportés par Gradio.
+# Ne doit pas entrer en conflit avec les routes des extra_pages ou les routes réservées.
 route: /
 
 # Optionnel: pages supplémentaires servies sur des routes dédiées.
