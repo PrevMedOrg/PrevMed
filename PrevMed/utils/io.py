@@ -8,6 +8,54 @@ from PrevMed.utils.version import __VERSION__
 
 _FILE_PATH_FIELDS = {"header", "body", "css", "extra_js"}
 
+# --- YAML schema: allowed keys at each level ---
+
+_REQUIRED_TOP_LEVEL_KEYS = {"survey_name", "questions"}
+
+_OPTIONAL_TOP_LEVEL_KEYS = {
+    "survey_version",
+    "PrevMed_version",
+    "page_title",
+    "show_survey_title",
+    "show_survey_version",
+    "show_webapp_version",
+    "route",
+    "body",
+    "header",
+    "css",
+    "extra_js",
+    "legal_summary",
+    "questions_header",
+    "pdf_extra_content",
+    "extra_pages",
+}
+
+_ALLOWED_TOP_LEVEL_KEYS = _REQUIRED_TOP_LEVEL_KEYS | _OPTIONAL_TOP_LEVEL_KEYS
+
+_REQUIRED_QUESTION_KEYS = {"variable", "order", "widget", "question"}
+
+_OPTIONAL_QUESTION_KEYS = {
+    "widget_args",
+    "skip_if",
+    "valid_if",
+    "invalid_message",
+}
+
+_ALLOWED_QUESTION_KEYS = _REQUIRED_QUESTION_KEYS | _OPTIONAL_QUESTION_KEYS
+
+_REQUIRED_EXTRA_PAGE_KEYS = {"route"}
+
+_OPTIONAL_EXTRA_PAGE_KEYS = {
+    "page_title",
+    "body",
+    "header",
+    "css",
+    "extra_js",
+    "legal_summary",
+}
+
+_ALLOWED_EXTRA_PAGE_KEYS = _REQUIRED_EXTRA_PAGE_KEYS | _OPTIONAL_EXTRA_PAGE_KEYS
+
 
 def _resolve_file_paths(config: Dict[str, Any], base_dir: Path) -> None:
     """Replace file-path references with file contents for known string fields."""
@@ -46,6 +94,51 @@ def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[s
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
+
+        # ── Validate top-level keys ──
+        missing_top = _REQUIRED_TOP_LEVEL_KEYS - config.keys()
+        if missing_top:
+            raise ValueError(
+                f"Clés obligatoires manquantes au niveau racine du YAML: {sorted(missing_top)}"
+            )
+        unknown_top = config.keys() - _ALLOWED_TOP_LEVEL_KEYS
+        if unknown_top:
+            raise ValueError(
+                f"Clés inconnues au niveau racine du YAML: {sorted(unknown_top)}. "
+                f"Clés autorisées: {sorted(_ALLOWED_TOP_LEVEL_KEYS)}"
+            )
+
+        # ── Validate per-question keys ──
+        for i, q in enumerate(config.get("questions", [])):
+            missing_q = _REQUIRED_QUESTION_KEYS - q.keys()
+            if missing_q:
+                raise ValueError(
+                    f"Question n°{i + 1}: clés obligatoires manquantes: {sorted(missing_q)}"
+                )
+            unknown_q = q.keys() - _ALLOWED_QUESTION_KEYS
+            if unknown_q:
+                raise ValueError(
+                    f"Question n°{i + 1} (variable '{q.get('variable', '?')}'): "
+                    f"clés inconnues: {sorted(unknown_q)}. "
+                    f"Clés autorisées: {sorted(_ALLOWED_QUESTION_KEYS)}"
+                )
+
+        # ── Validate extra_pages keys (only for inline dicts, not file paths) ──
+        for i, page in enumerate(config.get("extra_pages", [])):
+            if not isinstance(page, dict):
+                continue
+            missing_ep = _REQUIRED_EXTRA_PAGE_KEYS - page.keys()
+            if missing_ep:
+                raise ValueError(
+                    f"Extra_page n°{i + 1}: clés obligatoires manquantes: {sorted(missing_ep)}"
+                )
+            unknown_ep = page.keys() - _ALLOWED_EXTRA_PAGE_KEYS
+            if unknown_ep:
+                raise ValueError(
+                    f"Extra_page n°{i + 1} (route '{page.get('route', '?')}'): "
+                    f"clés inconnues: {sorted(unknown_ep)}. "
+                    f"Clés autorisées: {sorted(_ALLOWED_EXTRA_PAGE_KEYS)}"
+                )
 
         # Check PrevMed version compatibility
         yaml_version = config.get("PrevMed_version")
@@ -112,6 +205,19 @@ def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[s
                 logger.debug(f"Chargement d'une extra_page depuis: {ep_path}")
                 with open(ep_path, "r", encoding="utf-8") as ep_f:
                     ep_config = yaml.safe_load(ep_f)
+                # Validate keys of externally-loaded extra page
+                missing_ep = _REQUIRED_EXTRA_PAGE_KEYS - ep_config.keys()
+                if missing_ep:
+                    raise ValueError(
+                        f"Extra_page depuis '{ep_path}': clés obligatoires manquantes: {sorted(missing_ep)}"
+                    )
+                unknown_ep = ep_config.keys() - _ALLOWED_EXTRA_PAGE_KEYS
+                if unknown_ep:
+                    raise ValueError(
+                        f"Extra_page depuis '{ep_path}' (route '{ep_config.get('route', '?')}'): "
+                        f"clés inconnues: {sorted(unknown_ep)}. "
+                        f"Clés autorisées: {sorted(_ALLOWED_EXTRA_PAGE_KEYS)}"
+                    )
                 # Resolve file paths relative to the extra page YAML's directory
                 _resolve_file_paths(ep_config, ep_path.parent)
                 resolved_extra.append(ep_config)
