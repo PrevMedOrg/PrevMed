@@ -208,7 +208,12 @@ def create_survey_interface(
     extra_pages = config.get("extra_pages", [])
     for page_cfg in extra_pages:
         route = page_cfg["route"]
-        page_ctx = demo.route(page_cfg.get("page_title", route), route)
+        if route in ("", "/"):
+            # Root route: re-enter the main Blocks context
+            demo.current_page = ""
+            page_ctx = demo
+        else:
+            page_ctx = demo.route(page_cfg.get("page_title", route), route)
         with page_ctx:
             gr.Navbar(visible=False)
             create_extra_page(
