@@ -87,6 +87,17 @@ def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[s
         if "route" not in config:
             config["route"] = "/"
             logger.debug("Aucune route définie pour la page principale, utilisation de '/' par défaut")
+        else:
+            # Normalise: strip leading slash for non-root routes
+            raw_route = config["route"]
+            stripped_main = str(raw_route).lstrip("/")
+            if "/" in stripped_main:
+                raise ValueError(
+                    f"La route principale '{raw_route}' contient un sous-chemin: "
+                    "les sous-chemins (contenant '/') ne sont pas supportés par Gradio"
+                )
+            # Store normalised form: "/" for root, stripped otherwise
+            config["route"] = "/" if stripped_main == "" else stripped_main
 
         # Resolve extra_pages: entries can be paths to YAML files
         yaml_dir = Path(filepath).parent
@@ -135,6 +146,15 @@ def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[s
                 )
             seen.add(r)
 
+        # Check for conflicts between main survey route and extra page routes
+        main_route_stripped = "" if config["route"] == "/" else config["route"]
+        for r in extra_routes:
+            if r == main_route_stripped:
+                raise ValueError(
+                    f"La route '{r}' est utilisée à la fois pour la page principale "
+                    "et pour une extra_page"
+                )
+
         # Check for conflicts with reserved routes (e.g. "files" when --files-dir is used)
         if reserved_routes:
             for r in extra_routes:
@@ -142,6 +162,10 @@ def load_yaml(filepath: str, reserved_routes: list[str] | None = None) -> Dict[s
                     raise ValueError(
                         f"La route '{r}' est réservée et ne peut pas être utilisée comme extra_page"
                     )
+            if main_route_stripped in reserved_routes:
+                raise ValueError(
+                    f"La route '{config['route']}' est réservée et ne peut pas être utilisée comme route principale"
+                )
 
         # Resolve file-path references in string fields
         _resolve_file_paths(config, yaml_dir)

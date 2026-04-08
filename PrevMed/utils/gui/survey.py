@@ -2,8 +2,9 @@
 Survey interface for PrevMed.
 
 Builds the Gradio Blocks application that contains the questionnaire.
-Extra pages defined in ``extra_pages`` are served on their own routes
-via ``Blocks.route()``.
+The survey page is served on the route specified by the ``route`` YAML key
+(defaults to ``/``).  Extra pages defined in ``extra_pages`` are served on
+their own routes via ``Blocks.route()``.
 """
 
 import hashlib
@@ -216,9 +217,22 @@ def create_survey_interface(
                 default_legal_summary=config.get("legal_summary", "LEGAL"),
             )
 
-    # --- Survey content (main page at root "/") ---
-    demo.current_page = ""
-    with demo:
+    # --- Survey content ---
+    survey_route = config.get("route", "/")
+    if survey_route != "/":
+        # Non-root route: create a dedicated page via demo.route()
+        survey_ctx = demo.route(
+            config.get("page_title", config["survey_name"]),
+            survey_route,
+        )
+    else:
+        # Root route: re-enter the main Blocks context
+        demo.current_page = ""
+        survey_ctx = demo
+
+    with survey_ctx:
+        if survey_route != "/":
+            gr.Navbar(visible=False)
         if config.get("page_title"):
             if not config['page_title'].startswith("#") and not config['page_title'].startswith("<"):
                 gr.Markdown(f"# {config['page_title']}")
