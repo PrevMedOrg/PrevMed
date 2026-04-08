@@ -215,7 +215,8 @@ def create_survey_interface(
         else:
             page_ctx = demo.route(page_cfg.get("page_title", route), route)
         with page_ctx:
-            gr.Navbar(visible=False)
+            if route not in ("", "/"):
+                gr.Navbar(visible=False)
             create_extra_page(
                 page_config=page_cfg,
                 terms_md_content=terms_md_content,
