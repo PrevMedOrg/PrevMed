@@ -7,7 +7,7 @@ survey_version: 1.0.0
 show_survey_version: true
 show_webapp_version: false
 legal_summary: "Mentions légales et contact"
-PrevMed_version: 1.2.1
+PrevMed_version: 1.2.2
 
 # Optional: display survey_name as a title at the top of the page (default: true)
 show_survey_title: false
