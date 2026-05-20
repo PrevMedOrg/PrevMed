@@ -378,7 +378,7 @@ def scoring(
             "porteuses de la fragilité dans votre famille."
             "\n\nAttention, une première erreur à éviter dans l'évaluation, conduisant à "
             "une sur-estimation du risque, est d'entrer dans le questionnaire des cas de "
-            "cancer survenus chez des personnes non-apparentées entre elles (illustration). "
+            "cancer survenus chez des personnes non-apparentées entre elles ([illustration](https://preventionfamiliale.fr/files/Illustration-2.pdf)). "
             "Ainsi, il est nécessaire de préciser si certaines personnes atteintes de "
             "cancer sont non-apparentées entre elles, par exemple : père atteint de "
             "cancer colorectal et grand-mère maternelle (non-apparentée au père) atteinte "
