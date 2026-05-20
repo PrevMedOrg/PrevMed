@@ -1,8 +1,8 @@
-<h1 style="text-align: center;">Avez-vous eu un cas de cancer colorectal dans votre famille ?</h1>
+<h1 style="text-align: center;">Avez-vous eu un cas de cancer colorectal ou de cancer du corps de l'utérus dans votre famille ?</h1>
 
 <h2 style="text-align: center;">Le passé peut dès maintenant protéger l'avenir</h2>
 <br>
-<h2 style="text-align: center;">Un seul cas de cancer colorectal, même il y a 50 ans, chez vous ou parmi les membres de votre famille, pose une fois sur trois la question d'un risque majeur de cancer <a href="https://preventionfamiliale.fr/files/Comprendre-la-Genetique.pdf">génétique</a>, pour vous-même et pour vos enfants, présentement et dans le futur.</h2>
+<h2 style="text-align: center;">Un seul cas de ces cancers ou de 7 autres cancers (ovaire, estomac, intestin grêle, vésicule biliaire ou voies biliaires, pancréas, voies urinaires (rein-uretère-vessie), peau (cancers peu fréquents : «&nbsp;carcinome sébacé&nbsp;» ou «&nbsp;kérato-acanthome&nbsp;») ou cerveau), même il y a 50 ans, chez vous ou parmi les membres de votre famille, évoque une fois sur trois l'hypothèse du risque majeur de cancer <a href="https://preventionfamiliale.fr/files/Comprendre-la-Genetique.pdf">génétique</a>, dit du «&nbsp;syndrome de Lynch&nbsp;», pour vous-même et pour vos enfants, présentement et dans le futur.</h2>
 
 <img src="https://preventionfamiliale.fr/files/Logo.svg" style="float: right; height: 3em; width: 3.75em;" alt="Logo ASAGE">
 
