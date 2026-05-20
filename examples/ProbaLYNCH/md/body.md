@@ -4,7 +4,7 @@
 <br>
 <h2 style="text-align: center;">Un seul cas de cancer colorectal, même il y a 50 ans, chez vous ou parmi les membres de votre famille, pose une fois sur trois la question d'un risque majeur de cancer <a href="https://preventionfamiliale.fr/files/Comprendre-la-Genetique.pdf">génétique</a>, pour vous-même et pour vos enfants, présentement et dans le futur.</h2>
 
-<img src="https://preventionfamiliale.fr/files/Logo.svg" style="float: right; height: 3em;" alt="Logo ASAGE">
+<img src="https://preventionfamiliale.fr/files/Logo.svg" style="float: right; height: 3em; width: 3.75em;" alt="Logo ASAGE">
 
 <details><summary>Plus d'information (clic sur triangles)</summary>
 
